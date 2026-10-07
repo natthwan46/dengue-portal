@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" href="./css/admin.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="admin-header">
+
+        <div>
+            <h1>🛡️ Admin Dashboard</h1>
+
+            <p>
+                ระบบจัดการและติดตามข้อมูลเฝ้าระวังโรคไข้เลือดออก
+            </p>
+        </div>
+
+        <button
+            type="button"
+            class="logout-btn"
+            onclick="logoutAdmin()"
+        >
+            🚪 ออกจากระบบ
+        </button>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN
+    ========================== -->
+
+    <main class="admin-container">
+
+        <!-- Welcome -->
+
+        <section class="welcome">
+
+            <h2>เมนูสำหรับแอดมิน</h2>
+
+            <p>
+                เลือกเมนูที่ต้องการจัดการหรือตรวจสอบข้อมูล
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             ADMIN MENU
+        ========================== -->
+
+        <section class="admin-menu">
+
+
+            <!-- =========================
+                 ข้อมูลระบาดวิทยา
+            ========================== -->
+
+            <a
+                href="./epidemiology.html"
+                class="menu-card"
+            >
+
+                <div class="menu-icon">
+                    📊
+                </div>
+
+                <div>
+
+                    <h3>
+                        ข้อมูลระบาดวิทยา
+                    </h3>
+
+                    <p>
+                        ดูจำนวนผู้ป่วย สถิติ
+                        และพื้นที่เสี่ยงโรคไข้เลือดออก
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- =========================
+                 จัดการข้อมูลพื้นที่
+            ========================== -->
+
+            <a
+                href="./manage-reports.html"
+                class="menu-card"
+            >
+
+                <div class="menu-icon">
+                    📝
+                </div>
+
+                <div>
+
+                    <h3>
+                        จัดการข้อมูลพื้นที่
+                    </h3>
+
+                    <p>
+                        เพิ่ม แก้ไข และลบข้อมูล
+                        พื้นที่เสี่ยงโรคไข้เลือดออก
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- =========================
+                 แผนที่พื้นที่เสี่ยง
+            ========================== -->
+
+            <a
+                href="../map.html?from=admin"
+                class="menu-card"
+            >
+
+                <div class="menu-icon">
+                    🗺️
+                </div>
+
+                <div>
+
+                    <h3>
+                        แผนที่พื้นที่เสี่ยง
+                    </h3>
+
+                    <p>
+                        ตรวจสอบตำแหน่งและ
+                        ระดับความเสี่ยงบนแผนที่
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <!-- =========================
+                 หน้าผู้ใช้งานทั่วไป
+            ========================== -->
+
+            <a
+                href="../index.html"
+                class="menu-card"
+            >
+
+                <div class="menu-icon">
+                    🏠
+                </div>
+
+                <div>
+
+                    <h3>
+                        หน้าผู้ใช้งานทั่วไป
+                    </h3>
+
+                    <p>
+                        เปิดดูเว็บไซต์ในมุมมอง
+                        ของผู้ใช้งานทั่วไป
+                    </p>
+
+                </div>
+
+            </a>
+
+        </section>
+
+
+        <!-- =========================
+             ADMIN STATUS
+        ========================== -->
+
+        <section class="admin-info">
+
+            <div>
+
+                <h3>
+                    สถานะระบบ
+                </h3>
+
+                <p id="adminWelcome">
+                    เข้าสู่ระบบในฐานะแอดมิน
+                </p>
+
+            </div>
+
+
+            <div class="admin-status">
+
+                <span class="status-dot"></span>
+
+                พร้อมใช้งาน
+
+            </div>
+
+        </section>
+
+
+        <!-- =========================
+             FOOTER
+        ========================== -->
+
+        <footer class="admin-footer">
+
+            <p>
+                ระบบเฝ้าระวังและให้ความรู้โรคไข้เลือดออก
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <!-- =========================
+         ADMIN JAVASCRIPT
+    ========================== -->
+
+    <script src="./js/admin.js"></script>
+
+</body>
+
+</html>3

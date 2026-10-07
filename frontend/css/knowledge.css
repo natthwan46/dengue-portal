@@ -1,0 +1,818 @@
+/* ==============================
+   THEME
+============================== */
+
+:root {
+    --primary: #5aaed6;
+    --primary-dark: #3d8fba;
+    --primary-deep: #2f779e;
+
+    --primary-light: #e8f6fd;
+    --primary-soft: #f4faff;
+
+    --background: #f4faff;
+    --card: #ffffff;
+
+    --text: #243746;
+    --text-dark: #163247;
+    --text-light: #64748b;
+
+    --border: #d8eaf5;
+
+    --danger: #dc2626;
+    --warning: #f59e0b;
+    --success: #16a34a;
+}
+
+
+/* ==============================
+   RESET
+============================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, "Noto Sans Thai", sans-serif;
+
+    background: var(--background);
+    color: var(--text);
+}
+
+
+/* ==============================
+   HEADER
+============================== */
+
+.header {
+    background: linear-gradient(
+        135deg,
+        #5aaed6,
+        #82cbed
+    );
+
+    color: white;
+
+    padding: 28px 20px;
+
+    box-shadow: 0 4px 15px rgba(61, 143, 186, 0.15);
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+}
+
+.header h1 {
+    font-size: 28px;
+    margin-bottom: 7px;
+}
+
+.header p {
+    font-size: 14px;
+    color: #eefaff;
+}
+
+
+/* ปุ่มกลับ */
+
+.back-btn {
+    background: white;
+    color: var(--primary-dark);
+
+    text-decoration: none;
+
+    padding: 10px 16px;
+
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 9px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    box-shadow: 0 3px 10px rgba(47, 119, 158, 0.12);
+
+    transition: 0.2s;
+}
+
+.back-btn:hover {
+    background: #eefaff;
+    color: var(--primary-deep);
+
+    transform: translateY(-2px);
+}
+
+
+/* ==============================
+   CONTAINER
+============================== */
+
+.container {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 28px 20px 50px;
+}
+
+
+/* ==============================
+   SEARCH
+============================== */
+
+.search-section {
+    margin-bottom: 24px;
+}
+
+.search-box {
+    max-width: 650px;
+
+    margin: auto;
+
+    background: white;
+
+    border: 1px solid var(--border);
+    border-radius: 12px;
+
+    padding: 0 16px;
+
+    display: flex;
+    align-items: center;
+
+    box-shadow: 0 4px 15px rgba(61, 143, 186, 0.08);
+
+    transition: 0.2s;
+}
+
+.search-box:focus-within {
+    border-color: #8ccdea;
+
+    box-shadow: 0 0 0 3px rgba(90, 174, 214, 0.12);
+}
+
+.search-box span {
+    font-size: 18px;
+}
+
+.search-box input {
+    width: 100%;
+
+    border: none;
+    outline: none;
+
+    padding: 15px 12px;
+
+    font-size: 14px;
+
+    background: transparent;
+
+    color: var(--text);
+}
+
+
+/* ==============================
+   INTRO
+============================== */
+
+.intro {
+    background: linear-gradient(
+        135deg,
+        #e8f6fd,
+        #f4fbff
+    );
+
+    border: 1px solid #cbe9f7;
+
+    border-radius: 16px;
+
+    padding: 24px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 32px;
+
+    box-shadow: 0 4px 14px rgba(61, 143, 186, 0.06);
+}
+
+.intro-icon {
+    width: 65px;
+    height: 65px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: white;
+
+    border: 1px solid #d8eaf5;
+
+    border-radius: 50%;
+
+    font-size: 32px;
+
+    box-shadow: 0 4px 12px rgba(61, 143, 186, 0.08);
+}
+
+.intro h2 {
+    font-size: 21px;
+
+    margin-bottom: 7px;
+
+    color: var(--primary-deep);
+}
+
+.intro p {
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    color: #475569;
+}
+
+
+/* ==============================
+   TITLE
+============================== */
+
+.section-title {
+    margin-bottom: 18px;
+}
+
+.section-title h2 {
+    font-size: 21px;
+
+    margin-bottom: 5px;
+
+    color: var(--text-dark);
+}
+
+.section-title p {
+    font-size: 13px;
+
+    color: var(--text-light);
+}
+
+
+/* ==============================
+   CARDS
+============================== */
+
+.knowledge-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 18px;
+}
+
+.knowledge-card {
+    background: white;
+
+    border: 1px solid var(--border);
+    border-radius: 14px;
+
+    padding: 20px;
+
+    min-height: 220px;
+
+    display: flex;
+    flex-direction: column;
+
+    transition: 0.2s;
+
+    box-shadow: 0 3px 12px rgba(61, 143, 186, 0.06);
+}
+
+.knowledge-card:hover {
+    transform: translateY(-4px);
+
+    border-color: #a7d9ef;
+
+    box-shadow: 0 10px 25px rgba(61, 143, 186, 0.13);
+}
+
+
+/* การ์ดคำเตือนยังคงแดง */
+
+.warning-card {
+    border-color: #fecaca;
+}
+
+
+/* ==============================
+   CARD ICONS
+============================== */
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+
+    border-radius: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+
+    margin-bottom: 15px;
+}
+
+.blue {
+    background: #e3f4fd;
+}
+
+.orange {
+    background: #fff1df;
+}
+
+.red {
+    background: #fee2e2;
+}
+
+.purple {
+    background: #f1edff;
+}
+
+.green {
+    background: #e5f8ed;
+}
+
+.cyan {
+    background: #e0f7ff;
+}
+
+.yellow {
+    background: #fff8d9;
+}
+
+
+.knowledge-card h3 {
+    font-size: 16px;
+
+    margin-bottom: 8px;
+
+    color: var(--text-dark);
+}
+
+.knowledge-card p {
+    color: var(--text-light);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    margin-bottom: 15px;
+}
+
+
+/* อ่านเพิ่มเติม */
+
+.read-btn {
+    margin-top: auto;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--primary-dark);
+
+    text-align: left;
+
+    padding: 0;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.read-btn:hover {
+    color: var(--primary-deep);
+
+    text-decoration: underline;
+}
+
+.red-text {
+    color: var(--danger);
+}
+
+
+/* ==============================
+   NO RESULT
+============================== */
+
+.no-result {
+    display: none;
+
+    text-align: center;
+
+    padding: 40px;
+
+    color: var(--text-light);
+}
+
+
+/* ==============================
+   PREVENTION
+============================== */
+
+.prevention-section {
+    margin-top: 35px;
+
+    background: linear-gradient(
+        135deg,
+        #4f9fc8,
+        #72bee2
+    );
+
+    color: white;
+
+    border-radius: 17px;
+
+    padding: 28px;
+
+    box-shadow: 0 7px 20px rgba(61, 143, 186, 0.16);
+}
+
+.prevention-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 24px;
+}
+
+.small-title {
+    display: inline-block;
+
+    font-size: 11px;
+
+    background: rgba(255, 255, 255, 0.20);
+
+    padding: 5px 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.20);
+
+    border-radius: 20px;
+
+    margin-bottom: 8px;
+}
+
+.prevention-header h2 {
+    font-size: 21px;
+}
+
+.big-icon {
+    font-size: 40px;
+}
+
+.prevention-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 12px;
+}
+
+.prevention-item {
+    background: rgba(255, 255, 255, 0.15);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+
+    border-radius: 12px;
+
+    padding: 15px;
+
+    display: flex;
+
+    gap: 10px;
+
+    transition: 0.2s;
+}
+
+.prevention-item:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+.prevention-item > span {
+    width: 28px;
+    height: 28px;
+
+    flex-shrink: 0;
+
+    background: white;
+    color: var(--primary-dark);
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.prevention-item strong {
+    font-size: 14px;
+}
+
+.prevention-item p {
+    margin-top: 4px;
+
+    font-size: 11px;
+
+    line-height: 1.5;
+
+    color: #f3fbff;
+}
+
+
+/* ==============================
+   MEDICAL WARNING
+============================== */
+
+.medical-warning {
+    margin-top: 25px;
+
+    background: #fff7ed;
+
+    border: 1px solid #fed7aa;
+
+    border-radius: 12px;
+
+    padding: 17px;
+
+    display: flex;
+
+    gap: 12px;
+}
+
+.warning-icon {
+    font-size: 22px;
+}
+
+.medical-warning strong {
+    color: #9a3412;
+}
+
+.medical-warning p {
+    margin-top: 5px;
+
+    color: #7c2d12;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+
+/* ==============================
+   MODAL
+============================== */
+
+.modal {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(22, 50, 71, 0.55);
+
+    z-index: 9999;
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-box {
+    position: relative;
+
+    width: 100%;
+    max-width: 600px;
+
+    max-height: 85vh;
+
+    overflow-y: auto;
+
+    background: white;
+
+    border: 1px solid var(--border);
+
+    border-radius: 17px;
+
+    padding: 28px;
+
+    box-shadow: 0 20px 50px rgba(22, 50, 71, 0.20);
+}
+
+.close-modal {
+    position: absolute;
+
+    top: 12px;
+    right: 15px;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 28px;
+
+    color: var(--text-light);
+
+    cursor: pointer;
+}
+
+.close-modal:hover {
+    color: var(--primary-dark);
+}
+
+.modal-icon {
+    font-size: 38px;
+
+    margin-bottom: 10px;
+}
+
+.modal-box h2 {
+    font-size: 22px;
+
+    margin-bottom: 15px;
+
+    color: var(--text-dark);
+}
+
+.modal-content {
+    font-size: 14px;
+
+    line-height: 1.8;
+
+    color: #475569;
+}
+
+.modal-content ul {
+    padding-left: 22px;
+
+    margin: 10px 0;
+}
+
+.modal-content li {
+    margin-bottom: 7px;
+}
+
+
+/* กล่องเน้น */
+
+.modal-highlight {
+    margin-top: 15px;
+
+    padding: 13px;
+
+    background: #eef8fd;
+
+    border-left: 4px solid var(--primary);
+
+    border-radius: 7px;
+}
+
+
+/* คำเตือนอันตราย */
+
+.danger-highlight {
+    background: #fef2f2;
+
+    border-left-color: var(--danger);
+
+    color: #991b1b;
+}
+
+
+/* ปุ่ม Modal */
+
+.modal-close-btn {
+    width: 100%;
+
+    margin-top: 20px;
+
+    border: none;
+
+    background: var(--primary);
+
+    color: white;
+
+    padding: 11px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: 0.2s;
+}
+
+.modal-close-btn:hover {
+    background: var(--primary-dark);
+}
+
+
+/* ==============================
+   RESPONSIVE
+============================== */
+
+@media (max-width: 950px) {
+
+    .knowledge-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .prevention-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .header {
+        padding: 20px 15px;
+    }
+
+    .header-content {
+        align-items: flex-start;
+
+        gap: 10px;
+    }
+
+    .header h1 {
+        font-size: 20px;
+    }
+
+    .header p {
+        font-size: 11px;
+    }
+
+    .back-btn {
+        font-size: 10px;
+
+        padding: 8px 10px;
+    }
+
+    .container {
+        padding: 18px 12px 35px;
+    }
+
+    .intro {
+        align-items: flex-start;
+
+        padding: 18px;
+
+        gap: 13px;
+    }
+
+    .intro-icon {
+        width: 50px;
+        height: 50px;
+
+        font-size: 25px;
+    }
+
+    .knowledge-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .prevention-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .prevention-section {
+        padding: 20px 15px;
+    }
+
+    .modal-box {
+        padding: 22px 18px;
+    }
+}

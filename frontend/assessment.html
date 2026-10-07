@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ประเมินอาการเบื้องต้น</title>
+
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/assessment.css">
+</head>
+
+<body>
+
+    <!-- =====================================
+       HEADER
+  ====================================== -->
+
+    <header class="assessment-header">
+
+        <div class="header-inner">
+
+            <div class="header-title">
+
+                <div class="header-icon">
+                    🩺
+                </div>
+
+                <div>
+                    <h1>ประเมินอาการเบื้องต้น</h1>
+
+                    <p>
+                        แบบคัดกรองอาการที่เกี่ยวข้องกับโรคไข้เลือดออก
+                    </p>
+                </div>
+
+            </div>
+
+
+            <a href="./index.html" class="back-button">
+                <span>←</span>
+                กลับหน้าหลัก
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =====================================
+       MAIN
+  ====================================== -->
+
+    <main class="assessment-container">
+
+
+        <!-- INTRO -->
+
+        <section class="assessment-intro">
+
+            <div class="intro-icon">
+                🩺
+            </div>
+
+            <h2>
+                ตรวจสอบอาการของคุณ
+            </h2>
+
+            <p>
+                กรุณาตอบคำถามตามอาการที่กำลังเป็นอยู่
+                เพื่อประเมินระดับการเฝ้าระวังเบื้องต้น
+            </p>
+
+        </section>
+
+
+        <!-- =====================================
+         NOTICE
+    ====================================== -->
+
+        <section class="notice-box">
+
+            <strong>
+                ⚠️ ข้อควรทราบ
+            </strong>
+
+            <p>
+                แบบประเมินนี้เป็นเพียงเครื่องมือคัดกรองอาการเบื้องต้น
+                ไม่สามารถใช้ยืนยันหรือวินิจฉัยโรคไข้เลือดออกได้
+                หากมีอาการรุนแรงหรือมีสัญญาณอันตราย
+                ควรไปสถานพยาบาลเพื่อรับการประเมินจากบุคลากรทางการแพทย์
+            </p>
+
+        </section>
+
+
+        <!-- =====================================
+         FORM
+    ====================================== -->
+
+        <form id="assessmentForm">
+
+
+            <!-- =================================
+           STEP 1
+      ================================== -->
+
+            <section class="assessment-card">
+
+                <div class="card-heading">
+
+                    <div class="step-number">
+                        1
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            ข้อมูลเบื้องต้น
+                        </h2>
+
+                        <p class="section-description">
+                            กรุณากรอกข้อมูลตามอาการปัจจุบัน
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="form-grid">
+
+
+                    <!-- AGE -->
+
+                    <div class="form-group">
+
+                        <label for="age">
+                            อายุ
+                        </label>
+
+                        <input type="number" id="age" min="1" max="120" placeholder="เช่น 20" required>
+
+                    </div>
+
+
+                    <!-- FEVER DAYS -->
+
+                    <div class="form-group">
+
+                        <label for="feverDays">
+                            มีไข้กี่วัน?
+                        </label>
+
+                        <input type="number" id="feverDays" min="0" max="30" placeholder="จำนวนวัน" required>
+
+                    </div>
+
+
+                    <!-- TEMPERATURE -->
+
+                    <div class="form-group">
+
+                        <label for="temperature">
+                            อุณหภูมิร่างกาย (°C)
+                        </label>
+
+                        <input type="number" id="temperature" min="30" max="45" step="0.1" placeholder="เช่น 38.5"
+                            required>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+           STEP 2 : GENERAL SYMPTOMS
+      ================================== -->
+
+            <section class="assessment-card">
+
+                <div class="card-heading">
+
+                    <div class="step-number">
+                        2
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            อาการที่พบ
+                        </h2>
+
+                        <p class="section-description">
+                            เลือกอาการที่กำลังมีอยู่ สามารถเลือกได้มากกว่า 1 ข้อ
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="symptom-grid">
+
+
+                    <!-- ไข้สูง -->
+
+                    <label class="symptom-item">
+
+                        <input type="checkbox" name="symptom" value="ไข้สูง">
+
+                        <span class="symptom-icon">
+                            🌡️
+                        </span>
+
+                        <div class="symptom-text">
+
+                            <strong>
+                                ไข้สูง
+                            </strong>
+
+                            <small>
+                                มีไข้หรือรู้สึกร้อนผิดปกติ
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- ปวดศีรษะ -->
+
+                    <label class="symptom-item">
+
+                        <input type="checkbox" name="symptom" value="ปวดศีรษะ">
+
+                        <span class="symptom-icon">
+                            🤕
+                        </span>
+
+                        <div class="symptom-text">
+
+                            <strong>
+                                ปวดศีรษะ
+                            </strong>
+
+                            <small>
+                                มีอาการปวดศีรษะ
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- ปวดกระบอกตา -->
+
+                    <label class="symptom-item">
+
+                        <input type="checkbox" name="symptom" value="ปวดกระบอกตา">
+
+                        <span class="symptom-icon">
+                            👁️
+                        </span>
+
+                        <div class="symptom-text">
+
+                            <strong>
+                                ปวดบริเวณกระบอกตา
+                            </strong>
+
+                            <small>
+                                ปวดบริเวณรอบดวงตาหรือหลังดวงตา
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- ปวดเมื่อย -->
+
+                    <label class="symptom-item">
+
+                        <input type="checkbox" name="symptom" value="ปวดเมื่อย">
+
+                        <span class="symptom-icon">
+                            💪
+                        </span>
+
+                        <div class="symptom-text">
+
+                            <strong>
+                                ปวดเมื่อยตามตัว
+                            </strong>
+
+                            <small>
+                                ปวดกล้ามเนื้อหรือปวดตามร่างกาย
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- คลื่นไส้ -->
+
+                    <label class="symptom-item">
+
+                        <input type="checkbox" name="symptom" value="คลื่นไส้">
+
+                        <span class="symptom-icon">
+                            🤢
+                        </span>
+
+                        <div class="symptom-text">
+
+                            <strong>
+                                คลื่นไส้
+                            </strong>
+
+                            <small>
+                                มีอาการคลื่นไส้หรือรู้สึกอยากอาเจียน
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- เบื่ออาหาร -->
+
+                    <label class="symptom-item">
+
+                        <input type="checkbox" name="symptom" value="เบื่ออาหาร">
+
+                        <span class="symptom-icon">
+                            🍽️
+                        </span>
+
+                        <div class="symptom-text">
+
+                            <strong>
+                                เบื่ออาหาร
+                            </strong>
+
+                            <small>
+                                รับประทานอาหารได้น้อยลง
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- ผื่น -->
+
+                    <label class="symptom-item">
+
+                        <input type="checkbox" name="symptom" value="มีผื่น">
+
+                        <span class="symptom-icon">
+                            🔴
+                        </span>
+
+                        <div class="symptom-text">
+
+                            <strong>
+                                มีผื่นหรือจุดแดง
+                            </strong>
+
+                            <small>
+                                พบผื่นหรือจุดแดงบริเวณผิวหนัง
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- อ่อนเพลีย -->
+
+                    <label class="symptom-item">
+
+                        <input type="checkbox" name="symptom" value="อ่อนเพลีย">
+
+                        <span class="symptom-icon">
+                            😴
+                        </span>
+
+                        <div class="symptom-text">
+
+                            <strong>
+                                อ่อนเพลีย
+                            </strong>
+
+                            <small>
+                                รู้สึกไม่มีแรงหรือเหนื่อยกว่าปกติ
+                            </small>
+
+                        </div>
+
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+           STEP 3 : WARNING SIGNS
+      ================================== -->
+
+            <section class="assessment-card danger-card">
+
+                <div class="card-heading">
+
+                    <div class="step-number">
+                        3
+                    </div>
+
+                    <div>
+
+                        <h2>
+                            ⚠️ ตรวจสอบสัญญาณอันตราย
+                        </h2>
+
+                        <p class="section-description">
+                            หากมีอาการต่อไปนี้ ควรให้ความสำคัญเป็นพิเศษ
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="symptom-grid">
+
+
+                    <!-- ปวดท้อง -->
+
+                    <label class="symptom-item danger-symptom">
+
+                        <input type="checkbox" name="danger" value="ปวดท้องรุนแรง">
+
+                        <span class="symptom-icon">
+                            ⚠️
+                        </span>
+
+                        <div class="symptom-text">
+
+                            <strong>
+                                ปวดท้องมาก
+                            </strong>
+
+                            <small>
+                                ปวดท้องรุนแรงหรือกดเจ็บบริเวณท้อง
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- อาเจียนต่อเนื่อง -->
+
+                    <label class="symptom-item danger-symptom">
+
+                        <input type="checkbox" name="danger" value="อาเจียนต่อเนื่อง">
+
+                        <span class="symptom-icon">
+                            🤮
+                        </span>
+
+                        <div class="symptom-text">
+
+                            <strong>
+                                อาเจียนต่อเนื่อง
+                            </strong>
+
+                            <small>
+                                มีอาการอาเจียนหลายครั้งหรืออาเจียนต่อเนื่อง
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- เลือดออก -->
+
+                    <label class="symptom-item danger-symptom">
+
+                        <input type="checkbox" name="danger" value="มีเลือดออกผิดปกติ">
+
+                        <span class="symptom-icon">
+                            🚨
+                        </span>
+
+                        <div class="symptom-text">
+
+                            <strong>
+                                มีเลือดออกผิดปกติ
+                            </strong>
+
+                            <small>
+                                เช่น เลือดกำเดา เลือดออกตามไรฟัน
+                                หรืออาการเลือดออกผิดปกติอื่น
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <!-- ซึม -->
+
+                    <label class="symptom-item danger-symptom">
+
+                        <input type="checkbox" name="danger" value="ซึมหรืออ่อนเพลียมาก">
+
+                        <span class="symptom-icon">
+                            😵
+                        </span>
+
+                        <div class="symptom-text">
+
+                            <strong>
+                                ซึมหรืออ่อนเพลียมาก
+                            </strong>
+
+                            <small>
+                                รู้สึกซึมลง ไม่มีแรง หรือมีอาการผิดปกติชัดเจน
+                            </small>
+
+                        </div>
+
+                    </label>
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================
+           BUTTONS
+      ================================== -->
+
+            <div class="assessment-actions">
+
+                <button type="submit" class="assessment-button">
+                    🔍 ประเมินอาการ
+                </button>
+
+
+                <button type="button" class="reset-button" onclick="resetAssessment()">
+                    ↻ ล้างข้อมูล
+                </button>
+
+            </div>
+
+        </form>
+
+
+        <!-- =====================================
+         RESULT
+    ====================================== -->
+
+        <section id="resultBox" class="result-box">
+
+            <div id="resultIcon">
+            </div>
+
+
+            <h2 id="resultTitle">
+            </h2>
+
+
+            <p id="resultDescription">
+            </p>
+
+
+            <div id="resultAdvice">
+            </div>
+
+
+            <button type="button" onclick="resetAssessment()" class="assessment-button">
+                ↻ ประเมินใหม่
+            </button>
+
+        </section>
+
+
+        <!-- =====================================
+         DISCLAIMER
+    ====================================== -->
+
+        <section class="disclaimer">
+
+            <strong>
+                หมายเหตุ:
+            </strong>
+
+            ผลจากแบบประเมินนี้เป็นการคัดกรองเบื้องต้นจากข้อมูลที่ผู้ใช้งานเลือก
+            ไม่ใช่ผลการตรวจหรือการวินิจฉัยโรค
+            หากมีข้อสงสัยเกี่ยวกับอาการควรปรึกษาบุคลากรทางการแพทย์
+
+        </section>
+
+    </main>
+
+
+    <script src="./js/assessment.js"></script>
+
+</body>
+
+</html>

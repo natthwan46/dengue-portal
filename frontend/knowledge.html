@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>รอบรู้เรื่องไข้เลือดออก</title>
+
+  <link rel="stylesheet" href="./css/knowledge.css">
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="header">
+
+    <div class="header-content">
+
+      <div>
+        <h1>รอบรู้เรื่องไข้เลือดออก</h1>
+        <p>
+          ความรู้เกี่ยวกับโรค อาการ การป้องกัน
+          และการดูแลตนเองเบื้องต้น
+        </p>
+      </div>
+
+      <a href="./index.html" class="back-btn">
+        ← กลับหน้าหลัก
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <main class="container">
+
+    <!-- Search -->
+    <section class="search-section">
+
+      <div class="search-box">
+
+        <span>🔎</span>
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="ค้นหาความรู้เรื่องไข้เลือดออก..."
+        >
+
+      </div>
+
+    </section>
+
+
+    <!-- Introduction -->
+    <section class="intro">
+
+      <div class="intro-icon">
+        🦟
+      </div>
+
+      <div>
+
+        <h2>
+          รู้จักไข้เลือดออก ป้องกันได้
+        </h2>
+
+        <p>
+          เรียนรู้เกี่ยวกับโรคไข้เลือดออก
+          สังเกตอาการและสัญญาณอันตราย
+          พร้อมแนวทางลดแหล่งเพาะพันธุ์ยุงลาย
+          เพื่อช่วยดูแลตนเอง ครอบครัว และชุมชน
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- Knowledge Cards -->
+    <section>
+
+      <div class="section-title">
+
+        <div>
+          <h2>ความรู้ที่ควรรู้</h2>
+          <p>เลือกหัวข้อเพื่ออ่านรายละเอียดเพิ่มเติม</p>
+        </div>
+
+      </div>
+
+
+      <div class="knowledge-grid" id="knowledgeGrid">
+
+
+        <!-- 1 -->
+        <article
+          class="knowledge-card"
+          data-search="ไข้เลือดออก โรค เชื้อไวรัสเดงกี ยุงลาย"
+        >
+
+          <div class="card-icon blue">
+            🦠
+          </div>
+
+          <h3>
+            โรคไข้เลือดออกคืออะไร?
+          </h3>
+
+          <p>
+            ทำความรู้จักโรคไข้เลือดออก
+            สาเหตุ และการแพร่เชื้อ
+          </p>
+
+          <button
+            class="read-btn"
+            onclick="openKnowledge('about')"
+          >
+            อ่านเพิ่มเติม →
+          </button>
+
+        </article>
+
+
+        <!-- 2 -->
+        <article
+          class="knowledge-card"
+          data-search="อาการ ไข้สูง ปวดหัว ปวดเมื่อย ผื่น คลื่นไส้"
+        >
+
+          <div class="card-icon orange">
+            🤒
+          </div>
+
+          <h3>
+            อาการที่ควรรู้
+          </h3>
+
+          <p>
+            เรียนรู้อาการที่อาจพบ
+            เพื่อช่วยสังเกตความผิดปกติเบื้องต้น
+          </p>
+
+          <button
+            class="read-btn"
+            onclick="openKnowledge('symptoms')"
+          >
+            อ่านเพิ่มเติม →
+          </button>
+
+        </article>
+
+
+        <!-- 3 -->
+        <article
+          class="knowledge-card warning-card"
+          data-search="สัญญาณอันตราย ปวดท้อง อาเจียน เลือดออก ซึม"
+        >
+
+          <div class="card-icon red">
+            ⚠️
+          </div>
+
+          <h3>
+            สัญญาณอันตราย
+          </h3>
+
+          <p>
+            อาการสำคัญที่ควรเฝ้าระวัง
+            และควรรีบไปพบแพทย์
+          </p>
+
+          <button
+            class="read-btn red-text"
+            onclick="openKnowledge('danger')"
+          >
+            อ่านเพิ่มเติม →
+          </button>
+
+        </article>
+
+
+        <!-- 4 -->
+        <article
+          class="knowledge-card"
+          data-search="ยุงลาย ยุง พาหะ แหล่งเพาะพันธุ์"
+        >
+
+          <div class="card-icon purple">
+            🦟
+          </div>
+
+          <h3>
+            รู้จักยุงลาย
+          </h3>
+
+          <p>
+            รู้จักพาหะนำโรค
+            และบริเวณที่อาจเป็นแหล่งเพาะพันธุ์
+          </p>
+
+          <button
+            class="read-btn"
+            onclick="openKnowledge('mosquito')"
+          >
+            อ่านเพิ่มเติม →
+          </button>
+
+        </article>
+
+
+        <!-- 5 -->
+        <article
+          class="knowledge-card"
+          data-search="ป้องกัน ยุงกัด เสื้อผ้า มุ้ง ยากันยุง"
+        >
+
+          <div class="card-icon green">
+            🛡️
+          </div>
+
+          <h3>
+            วิธีป้องกันยุงกัด
+          </h3>
+
+          <p>
+            แนวทางลดโอกาสถูกยุงกัด
+            สำหรับตนเองและคนในครอบครัว
+          </p>
+
+          <button
+            class="read-btn"
+            onclick="openKnowledge('prevention')"
+          >
+            อ่านเพิ่มเติม →
+          </button>
+
+        </article>
+
+
+        <!-- 6 -->
+        <article
+          class="knowledge-card"
+          data-search="กำจัดแหล่งเพาะพันธุ์ น้ำขัง ภาชนะ ลูกน้ำ"
+        >
+
+          <div class="card-icon cyan">
+            🪣
+          </div>
+
+          <h3>
+            กำจัดแหล่งเพาะพันธุ์
+          </h3>
+
+          <p>
+            จัดการภาชนะและน้ำขัง
+            เพื่อลดแหล่งเพาะพันธุ์ยุงลาย
+          </p>
+
+          <button
+            class="read-btn"
+            onclick="openKnowledge('breeding')"
+          >
+            อ่านเพิ่มเติม →
+          </button>
+
+        </article>
+
+
+        <!-- 7 -->
+        <article
+          class="knowledge-card"
+          data-search="ดูแลเบื้องต้น มีไข้ ดื่มน้ำ พักผ่อน ยา"
+        >
+
+          <div class="card-icon yellow">
+            🩺
+          </div>
+
+          <h3>
+            การดูแลเบื้องต้น
+          </h3>
+
+          <p>
+            สิ่งที่ควรทำเมื่อมีไข้
+            และข้อควรระวังในการใช้ยา
+          </p>
+
+          <button
+            class="read-btn"
+            onclick="openKnowledge('care')"
+          >
+            อ่านเพิ่มเติม →
+          </button>
+
+        </article>
+
+
+        <!-- 8 -->
+        <article
+          class="knowledge-card"
+          data-search="โรงพยาบาล แพทย์ ฉุกเฉิน อาการอันตราย"
+        >
+
+          <div class="card-icon red">
+            🏥
+          </div>
+
+          <h3>
+            เมื่อไรควรไปโรงพยาบาล?
+          </h3>
+
+          <p>
+            สังเกตอาการที่ไม่ควรรอดูอาการเอง
+            และควรได้รับการประเมินจากบุคลากรทางการแพทย์
+          </p>
+
+          <button
+            class="read-btn red-text"
+            onclick="openKnowledge('hospital')"
+          >
+            อ่านเพิ่มเติม →
+          </button>
+
+        </article>
+
+
+      </div>
+
+      <div id="noResult" class="no-result">
+        ไม่พบหัวข้อความรู้ที่ค้นหา
+      </div>
+
+    </section>
+
+
+    <!-- Prevention Highlight -->
+    <section class="prevention-section">
+
+      <div class="prevention-header">
+
+        <div>
+          <span class="small-title">
+            ป้องกันก่อนเกิดโรค
+          </span>
+
+          <h2>
+            ช่วยกันลดแหล่งเพาะพันธุ์ยุงลาย
+          </h2>
+        </div>
+
+        <div class="big-icon">
+          🦟
+        </div>
+
+      </div>
+
+
+      <div class="prevention-grid">
+
+        <div class="prevention-item">
+          <span>1</span>
+          <div>
+            <strong>ปิด</strong>
+            <p>ปิดภาชนะเก็บน้ำให้มิดชิด</p>
+          </div>
+        </div>
+
+        <div class="prevention-item">
+          <span>2</span>
+          <div>
+            <strong>เปลี่ยน</strong>
+            <p>เปลี่ยนน้ำในภาชนะที่จำเป็นเป็นประจำ</p>
+          </div>
+        </div>
+
+        <div class="prevention-item">
+          <span>3</span>
+          <div>
+            <strong>กำจัด</strong>
+            <p>กำจัดภาชนะหรือสิ่งของที่มีน้ำขัง</p>
+          </div>
+        </div>
+
+        <div class="prevention-item">
+          <span>4</span>
+          <div>
+            <strong>ป้องกัน</strong>
+            <p>ป้องกันตนเองและครอบครัวจากยุงกัด</p>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- Warning -->
+    <section class="medical-warning">
+
+      <div class="warning-icon">
+        ⚠️
+      </div>
+
+      <div>
+        <strong>
+          ข้อควรทราบ
+        </strong>
+
+        <p>
+          ข้อมูลในหน้านี้จัดทำขึ้นเพื่อให้ความรู้เบื้องต้น
+          ไม่ใช้แทนการตรวจวินิจฉัยหรือคำแนะนำจากแพทย์
+          หากมีอาการรุนแรงหรือมีสัญญาณอันตราย
+          ควรไปพบแพทย์โดยเร็ว
+        </p>
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Modal -->
+  <div id="knowledgeModal" class="modal">
+
+    <div class="modal-box">
+
+      <button
+        class="close-modal"
+        onclick="closeKnowledge()"
+      >
+        ×
+      </button>
+
+      <div id="modalIcon" class="modal-icon">
+      </div>
+
+      <h2 id="modalTitle"></h2>
+
+      <div id="modalContent" class="modal-content">
+      </div>
+
+      <button
+        class="modal-close-btn"
+        onclick="closeKnowledge()"
+      >
+        ปิด
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <script src="./js/knowledge.js"></script>
+
+</body>
+
+</html>

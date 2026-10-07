@@ -1,0 +1,863 @@
+/* ==============================
+   THEME
+============================== */
+
+:root {
+    --primary: #5aaed6;
+    --primary-dark: #3d8fba;
+    --primary-deep: #2f779e;
+
+    --primary-light: #e8f6fd;
+    --primary-soft: #f2faff;
+
+    --background: #f4faff;
+    --card: #ffffff;
+
+    --text: #243746;
+    --text-dark: #163247;
+    --text-light: #64748b;
+
+    --border: #d8eaf5;
+
+    --high: #dc2626;
+    --medium: #f59e0b;
+    --low: #16a34a;
+}
+
+
+/* ==============================
+   RESET
+============================== */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    font-family: Arial, "Noto Sans Thai", sans-serif;
+
+    background: var(--background);
+    color: var(--text);
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* ==============================
+   HEADER
+============================== */
+
+.main-header {
+    background: linear-gradient(135deg,
+            #5aaed6,
+            #82cbed);
+
+    color: white;
+
+    padding: 25px 5%;
+
+    box-shadow: 0 4px 15px rgba(61, 143, 186, 0.15);
+}
+
+.header-container {
+    max-width: 1400px;
+
+    margin: auto;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+}
+
+.brand-icon {
+    width: 58px;
+    height: 58px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(255, 255, 255, 0.22);
+
+    border: 1px solid rgba(255, 255, 255, 0.30);
+
+    border-radius: 16px;
+
+    font-size: 30px;
+
+    box-shadow: 0 4px 12px rgba(47, 119, 158, 0.10);
+}
+
+.brand h1 {
+    margin: 0 0 6px;
+
+    font-size: 27px;
+}
+
+.brand p {
+    margin: 0;
+
+    color: #f0faff;
+
+    font-size: 13px;
+}
+
+.header-status {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 15px;
+
+    background: rgba(255, 255, 255, 0.22);
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    border-radius: 30px;
+
+    font-size: 13px;
+}
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+
+    background: #22c55e;
+
+    border: 2px solid rgba(255, 255, 255, 0.85);
+
+    border-radius: 50%;
+}
+
+
+/* ==============================
+   QUICK MENU
+============================== */
+
+.quick-menu {
+    padding: 30px 5% 15px;
+}
+
+.quick-menu-container {
+    max-width: 1400px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+.quick-card {
+    min-height: 125px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 20px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    color: var(--text);
+
+    box-shadow: 0 4px 16px rgba(61, 143, 186, 0.07);
+
+    transition:
+        transform 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.quick-card:hover {
+    transform: translateY(-4px);
+
+    border-color: #8dcbea;
+
+    box-shadow: 0 9px 25px rgba(61, 143, 186, 0.15);
+}
+
+.quick-icon {
+    width: 58px;
+    height: 58px;
+
+    flex-shrink: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    font-size: 28px;
+}
+
+
+/* แผนที่ */
+
+.map-icon {
+    background: #e2f5ff;
+}
+
+
+/* ความรู้ */
+
+.knowledge-icon {
+    background: #e8f1ff;
+}
+
+
+/* ประเมินอาการ */
+
+.assessment-icon {
+    background: #fff5d9;
+}
+
+
+/* แจ้งแหล่งน้ำขัง */
+
+.report-icon {
+    background: #e8f7ff;
+}
+
+
+.quick-content {
+    flex: 1;
+}
+
+.quick-content h3 {
+    margin: 0 0 7px;
+
+    color: var(--text-dark);
+
+    font-size: 17px;
+}
+
+.quick-content p {
+    margin: 0;
+
+    color: var(--text-light);
+
+    font-size: 12px;
+
+    line-height: 1.6;
+}
+
+.quick-arrow {
+    color: #94b9cc;
+
+    font-size: 28px;
+
+    transition: 0.2s;
+}
+
+.quick-card:hover .quick-arrow {
+    color: var(--primary-dark);
+
+    transform: translateX(3px);
+}
+
+
+/* ==============================
+   COMMON SECTION
+============================== */
+
+.dashboard-section,
+.map-section,
+.table-section {
+    width: calc(100% - 10%);
+
+    max-width: 1400px;
+
+    margin: 20px auto;
+}
+
+.section-heading {
+    margin-bottom: 18px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
+}
+
+.section-heading h2 {
+    margin: 0 0 5px;
+
+    color: var(--text-dark);
+
+    font-size: 23px;
+}
+
+.section-heading p {
+    margin: 0;
+
+    color: var(--text-light);
+
+    font-size: 13px;
+}
+
+
+/* ==============================
+   DASHBOARD STAT CARDS
+============================== */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 18px;
+}
+
+.stat-card {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 22px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 15px;
+
+    box-shadow: 0 4px 16px rgba(61, 143, 186, 0.07);
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-3px);
+
+    box-shadow: 0 8px 22px rgba(61, 143, 186, 0.12);
+}
+
+.stat-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stat-card p {
+    margin: 0 0 12px;
+
+    color: #475569;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.stat-card h3 {
+    margin: 0;
+
+    color: var(--text-dark);
+
+    font-size: 32px;
+}
+
+.stat-card span {
+    color: var(--text-light);
+
+    font-size: 12px;
+}
+
+.stat-icon {
+    width: 50px;
+    height: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 14px;
+
+    font-size: 22px;
+}
+
+
+/* ผู้ป่วยทั้งหมด */
+
+.total-icon {
+    background: #e3f4fd;
+}
+
+.total-card {
+    border-left: 5px solid var(--primary);
+}
+
+
+/* เสี่ยงสูง */
+
+.high-icon {
+    background: #fee2e2;
+}
+
+.high-card {
+    border-left: 5px solid var(--high);
+}
+
+
+/* เสี่ยงปานกลาง */
+
+.medium-icon {
+    background: #fef3c7;
+}
+
+.medium-card {
+    border-left: 5px solid var(--medium);
+}
+
+
+/* เสี่ยงต่ำ */
+
+.low-icon {
+    background: #dcfce7;
+}
+
+.low-card {
+    border-left: 5px solid var(--low);
+}
+
+
+/* ==============================
+   MAP
+============================== */
+
+.map-section {
+    margin-top: 35px;
+}
+
+.view-map-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 10px 17px;
+
+    background: var(--primary);
+    color: white;
+
+    border-radius: 9px;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    box-shadow: 0 3px 10px rgba(61, 143, 186, 0.15);
+
+    transition: 0.2s;
+}
+
+.view-map-button:hover {
+    background: var(--primary-dark);
+
+    transform: translateY(-1px);
+}
+
+.map-legend {
+    display: flex;
+
+    gap: 22px;
+
+    margin-bottom: 12px;
+
+    color: #475569;
+
+    font-size: 12px;
+}
+
+.map-legend span {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+
+    display: inline-block;
+
+    border-radius: 50%;
+}
+
+.high-dot {
+    background: var(--high);
+}
+
+.medium-dot {
+    background: var(--medium);
+}
+
+.low-dot {
+    background: var(--low);
+}
+
+#riskMap {
+    width: 100%;
+    height: 430px;
+
+    background: #e6f4fb;
+
+    border: 1px solid var(--border);
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    box-shadow: 0 5px 18px rgba(61, 143, 186, 0.10);
+}
+
+
+/* ==============================
+   TABLE
+============================== */
+
+.table-section {
+    margin-top: 35px;
+    margin-bottom: 50px;
+
+    padding: 25px;
+
+    background: var(--card);
+
+    border: 1px solid var(--border);
+
+    border-radius: 16px;
+
+    box-shadow: 0 4px 18px rgba(61, 143, 186, 0.08);
+}
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+thead {
+    background: #edf8fd;
+}
+
+th {
+    padding: 16px;
+
+    color: #31546a;
+
+    text-align: left;
+
+    font-size: 13px;
+}
+
+td {
+    padding: 16px;
+
+    border-bottom: 1px solid var(--border);
+
+    color: #475569;
+
+    font-size: 13px;
+}
+
+tbody tr {
+    transition: background 0.15s;
+}
+
+tbody tr:hover {
+    background: #f2faff;
+}
+
+.loading {
+    padding: 20px;
+
+    text-align: center;
+
+    color: var(--text-light);
+}
+
+.error-message {
+    color: var(--high);
+
+    text-align: center;
+}
+
+
+/* ==============================
+   RISK BADGES
+============================== */
+
+.risk-high,
+.risk-medium,
+.risk-low {
+    display: inline-block;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.risk-high {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.risk-medium {
+    background: #fef3c7;
+    color: #b45309;
+}
+
+.risk-low {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+
+/* ==============================
+   FOOTER
+============================== */
+
+.main-footer {
+    padding: 27px 20px;
+
+    background: linear-gradient(135deg,
+            #4d9fc8,
+            #6bbbe1);
+
+    color: white;
+
+    text-align: center;
+}
+
+.main-footer p {
+    margin: 0 0 6px;
+
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.main-footer small {
+    color: #eefaff;
+}
+
+
+/* ==============================
+   TABLET
+============================== */
+
+@media (max-width: 1100px) {
+
+    .quick-menu-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+/* ==============================
+   MOBILE
+============================== */
+
+@media (max-width: 650px) {
+
+    .main-header {
+        padding: 20px 15px;
+    }
+
+    .header-container {
+        gap: 10px;
+    }
+
+    .brand {
+        gap: 10px;
+    }
+
+    .brand-icon {
+        width: 45px;
+        height: 45px;
+
+        font-size: 22px;
+
+        border-radius: 12px;
+    }
+
+    .brand h1 {
+        font-size: 19px;
+    }
+
+    .brand p {
+        font-size: 10px;
+    }
+
+    .header-status {
+        display: none;
+    }
+
+
+    /* Quick Menu */
+
+    .quick-menu {
+        padding: 20px 12px 5px;
+    }
+
+    .quick-menu-container {
+        grid-template-columns: 1fr;
+
+        gap: 12px;
+    }
+
+    .quick-card {
+        min-height: 100px;
+
+        padding: 15px;
+    }
+
+    .quick-icon {
+        width: 50px;
+        height: 50px;
+
+        font-size: 24px;
+    }
+
+
+    /* Sections */
+
+    .dashboard-section,
+    .map-section,
+    .table-section {
+        width: calc(100% - 24px);
+    }
+
+
+    /* Dashboard */
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+
+    /* Heading */
+
+    .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+
+    /* Map */
+
+    #riskMap {
+        height: 350px;
+    }
+
+    .map-legend {
+        flex-wrap: wrap;
+
+        gap: 10px 18px;
+    }
+
+    .view-map-button {
+        width: 100%;
+    }
+
+
+    /* Table */
+
+    .table-section {
+        padding: 15px;
+    }
+
+    th,
+    td {
+        padding: 12px;
+
+        white-space: nowrap;
+    }
+
+    /* =========================
+   INSTALL APP BUTTON
+========================= */
+
+    .install-app-btn {
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        background: rgba(255, 255, 255, 0.95);
+        color: #2f779e;
+
+        padding: 10px 18px;
+
+        border-radius: 12px;
+
+        font-size: 14px;
+        font-weight: 700;
+
+        cursor: pointer;
+
+        box-shadow: 0 4px 12px rgba(47, 119, 158, 0.15);
+
+        transition: 0.2s ease;
+    }
+
+    .install-app-btn:hover {
+        background: #ffffff;
+
+        transform: translateY(-2px);
+
+        box-shadow: 0 6px 16px rgba(47, 119, 158, 0.22);
+    }
+
+    .install-app-btn:active {
+        transform: translateY(0);
+    }
+
+    @media (max-width: 650px) {
+
+        .install-app-btn {
+            width: 100%;
+            margin-top: 12px;
+        }
+
+    }
+
+}

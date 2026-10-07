@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard เฝ้าระวังระบาดวิทยา</title>
+
+    <link rel="stylesheet" href="./css/epidemiology.css">
+</head>
+
+<body>
+
+    <!-- =============================
+         HEADER
+    ============================== -->
+
+    <header class="epi-header">
+
+        <div class="epi-header-content">
+            <h1>📊 Dashboard เฝ้าระวังระบาดวิทยา</h1>
+
+            <p>
+                ระบบสำหรับแอดมินติดตามสถานการณ์โรคไข้เลือดออก
+            </p>
+        </div>
+
+        <a href="./index.html" class="back-admin-btn">
+            ← กลับหน้า Admin
+        </a>
+
+    </header>
+
+
+    <main class="epi-container">
+
+        <!-- =============================
+             สถานะระบบ
+        ============================== -->
+
+        <div class="system-status">
+
+            <div>
+                <span class="status-dot"></span>
+                <strong>ระบบเชื่อมต่อข้อมูลแล้ว</strong>
+            </div>
+
+            <span id="updateTime"></span>
+
+        </div>
+
+
+        <!-- =============================
+             SUMMARY
+        ============================== -->
+
+        <section class="epi-summary">
+
+            <div class="epi-card">
+
+                <div class="epi-icon">👥</div>
+
+                <div>
+                    <h3>ผู้ป่วยทั้งหมด</h3>
+                    <strong id="totalCases">0</strong>
+                    <span>ราย</span>
+                </div>
+
+            </div>
+
+
+            <div class="epi-card high-card">
+
+                <div class="epi-icon">🔴</div>
+
+                <div>
+                    <h3>พื้นที่เสี่ยงสูง</h3>
+                    <strong id="highRisk">0</strong>
+                    <span>พื้นที่</span>
+                </div>
+
+            </div>
+
+
+            <div class="epi-card medium-card">
+
+                <div class="epi-icon">🟠</div>
+
+                <div>
+                    <h3>พื้นที่เสี่ยงปานกลาง</h3>
+                    <strong id="mediumRisk">0</strong>
+                    <span>พื้นที่</span>
+                </div>
+
+            </div>
+
+
+            <div class="epi-card low-card">
+
+                <div class="epi-icon">🟢</div>
+
+                <div>
+                    <h3>พื้นที่เสี่ยงต่ำ</h3>
+                    <strong id="lowRisk">0</strong>
+                    <span>พื้นที่</span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =============================
+             พื้นที่ที่ควรเฝ้าระวัง
+        ============================== -->
+
+        <section class="alert-panel">
+
+            <h2>🚨 พื้นที่ที่ควรเฝ้าระวัง</h2>
+
+            <div id="alertList">
+                กำลังตรวจสอบข้อมูล...
+            </div>
+
+        </section>
+
+
+        <!-- =============================
+             กราฟ
+        ============================== -->
+
+        <section class="chart-panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <h2>📈 จำนวนผู้ป่วยแยกตามพื้นที่</h2>
+
+                    <p>
+                        เปรียบเทียบจำนวนผู้ป่วยในแต่ละพื้นที่
+                    </p>
+                </div>
+
+            </div>
+
+            <div id="barChart" class="bar-chart"></div>
+
+        </section>
+
+
+        <!-- =============================
+             สรุประดับความเสี่ยง
+        ============================== -->
+
+        <section class="risk-panel">
+
+            <h2>📊 สรุประดับความเสี่ยง</h2>
+
+            <div class="risk-summary">
+
+                <div>
+                    <span class="risk-dot high"></span>
+                    <span>เสี่ยงสูง</span>
+                    <strong id="riskHighPercent">0%</strong>
+                </div>
+
+                <div>
+                    <span class="risk-dot medium"></span>
+                    <span>เสี่ยงปานกลาง</span>
+                    <strong id="riskMediumPercent">0%</strong>
+                </div>
+
+                <div>
+                    <span class="risk-dot low"></span>
+                    <span>เสี่ยงต่ำ</span>
+                    <strong id="riskLowPercent">0%</strong>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- =============================
+             ตารางข้อมูล
+        ============================== -->
+
+        <section class="epi-table-panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <h2>📋 ข้อมูลพื้นที่เฝ้าระวัง</h2>
+
+                    <p>
+                        ข้อมูลจากระบบฐานข้อมูล
+                    </p>
+                </div>
+
+                <!-- Admin เข้าแผนที่ -->
+                <a href="../map.html?from=admin" class="map-link">
+                    🗺️ ดูแผนที่พื้นที่เสี่ยง
+                </a>
+
+            </div>
+
+
+            <div id="loading">
+                กำลังโหลดข้อมูล...
+            </div>
+
+            <div id="error"></div>
+
+
+            <div class="table-wrapper">
+
+                <table id="epiTable" style="display: none;">
+
+                    <thead>
+                        <tr>
+                            <th>ลำดับ</th>
+                            <th>พื้นที่</th>
+                            <th>ระดับความเสี่ยง</th>
+                            <th>จำนวนผู้ป่วย</th>
+                            <th>รายละเอียด</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="epiTableBody"></tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- =============================
+             เมนูด้านล่าง
+        ============================== -->
+
+        <section class="admin-actions">
+
+            <!-- กลับหน้า Admin -->
+            <a href="./index.html" class="action-button">
+                🏠 กลับหน้า Admin
+            </a>
+
+
+            <!-- สำคัญ: ใส่ from=admin -->
+            <a href="../map.html?from=admin" class="action-button">
+                🗺️ ดูแผนที่พื้นที่เสี่ยง
+            </a>
+
+
+            <button
+                type="button"
+                class="action-button refresh-button"
+                onclick="loadEpidemiology()"
+            >
+                🔄 อัปเดตข้อมูล
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- =============================
+         ตรวจสอบการ Login ของ Admin
+    ============================== -->
+
+    <script>
+        if (sessionStorage.getItem('adminLoggedIn') !== 'true') {
+            window.location.href = './login.html';
+        }
+    </script>
+
+
+    <!-- JavaScript -->
+    <script src="./js/epidemiology.js"></script>
+
+</body>
+
+</html>

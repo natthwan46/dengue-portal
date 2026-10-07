@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>แจ้งแหล่งน้ำขัง</title>
+
+    <link rel="stylesheet" href="./css/report-breeding.css">
+</head>
+
+<body>
+
+<header class="report-header">
+
+    <div>
+        <h1>📸 แจ้งแหล่งน้ำขัง</h1>
+        <p>ร่วมแจ้งจุดเสี่ยงที่อาจเป็นแหล่งเพาะพันธุ์ยุงลาย</p>
+    </div>
+
+    <a href="./index.html" class="back-button">
+        ← กลับหน้าหลัก
+    </a>
+
+</header>
+
+
+<main class="report-container">
+
+    <section class="notice-box">
+        <div class="notice-icon">🦟</div>
+
+        <div>
+            <strong>พบแหล่งน้ำขัง?</strong>
+
+            <p>
+                ถ่ายภาพและแจ้งตำแหน่ง เพื่อเป็นข้อมูลสำหรับติดตาม
+                และเฝ้าระวังแหล่งเพาะพันธุ์ยุงลาย
+            </p>
+        </div>
+    </section>
+
+
+    <form id="breedingReportForm">
+
+        <!-- รูปภาพ -->
+        <section class="report-card">
+
+            <div class="section-title">
+                <span>1</span>
+
+                <div>
+                    <h2>ถ่ายภาพแหล่งน้ำขัง</h2>
+                    <p>ถ่ายภาพหรือเลือกรูปจากอุปกรณ์</p>
+                </div>
+            </div>
+
+            <label for="reportImage" class="upload-area">
+
+                <div id="uploadPlaceholder">
+                    <div class="camera-icon">📷</div>
+
+                    <strong>แตะเพื่อถ่ายรูปหรือเลือกรูปภาพ</strong>
+
+                    <small>รองรับ JPG, JPEG และ PNG</small>
+                </div>
+
+                <img
+                    id="imagePreview"
+                    alt="ตัวอย่างรูปภาพ"
+                    style="display: none;"
+                >
+
+            </label>
+
+            <input
+                type="file"
+                id="reportImage"
+                accept="image/*"
+                capture="environment"
+                hidden
+                required
+            >
+
+            <button
+                type="button"
+                id="removeImageButton"
+                class="remove-image-button"
+                style="display: none;"
+            >
+                ลบรูปภาพ
+            </button>
+
+        </section>
+
+
+        <!-- สถานที่ -->
+        <section class="report-card">
+
+            <div class="section-title">
+                <span>2</span>
+
+                <div>
+                    <h2>สถานที่พบแหล่งน้ำขัง</h2>
+                    <p>ระบุบริเวณที่พบให้ชัดเจน</p>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="area">
+                    พื้นที่ / สถานที่
+                </label>
+
+                <input
+                    type="text"
+                    id="area"
+                    placeholder="เช่น บริเวณสวนสาธารณะ ใกล้ตลาด..."
+                    required
+                >
+
+            </div>
+
+
+            <button
+                type="button"
+                id="locationButton"
+                class="location-button"
+            >
+                📍 ใช้ตำแหน่งปัจจุบัน
+            </button>
+
+            <p class="location-note">
+                ตำแหน่งจะถูกใช้เมื่อคุณกดอนุญาตเท่านั้น
+            </p>
+
+
+            <div
+                id="locationResult"
+                class="location-result"
+                style="display: none;"
+            >
+
+                <div>
+                    <span>ละติจูด</span>
+                    <strong id="latitudeText">-</strong>
+                </div>
+
+                <div>
+                    <span>ลองจิจูด</span>
+                    <strong id="longitudeText">-</strong>
+                </div>
+
+            </div>
+
+            <input type="hidden" id="latitude">
+            <input type="hidden" id="longitude">
+
+        </section>
+
+
+        <!-- รายละเอียด -->
+        <section class="report-card">
+
+            <div class="section-title">
+                <span>3</span>
+
+                <div>
+                    <h2>รายละเอียดเพิ่มเติม</h2>
+                    <p>ช่วยอธิบายลักษณะของจุดที่พบ</p>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="sourceType">
+                    ประเภทแหล่งน้ำขัง
+                </label>
+
+                <select id="sourceType" required>
+
+                    <option value="">
+                        -- เลือกประเภท --
+                    </option>
+
+                    <option value="ภาชนะน้ำขัง">
+                        ภาชนะน้ำขัง
+                    </option>
+
+                    <option value="ยางรถยนต์เก่า">
+                        ยางรถยนต์เก่า
+                    </option>
+
+                    <option value="กระถางต้นไม้">
+                        กระถางต้นไม้ / จานรองกระถาง
+                    </option>
+
+                    <option value="ขยะหรือภาชนะเหลือใช้">
+                        ขยะหรือภาชนะเหลือใช้
+                    </option>
+
+                    <option value="ท่อหรือรางระบายน้ำ">
+                        ท่อหรือรางระบายน้ำ
+                    </option>
+
+                    <option value="อื่น ๆ">
+                        อื่น ๆ
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="description">
+                    รายละเอียด
+                </label>
+
+                <textarea
+                    id="description"
+                    rows="5"
+                    placeholder="เช่น มีน้ำขังในยางรถยนต์หลายเส้น พบอยู่บริเวณข้างอาคาร..."
+                ></textarea>
+
+            </div>
+
+        </section>
+
+
+        <div class="form-actions">
+
+            <button type="reset" class="reset-button">
+                ล้างข้อมูล
+            </button>
+
+            <button type="submit" class="submit-button">
+                📤 ส่งรายงาน
+            </button>
+
+        </div>
+
+    </form>
+
+
+    <section
+        id="successBox"
+        class="success-box"
+        style="display: none;"
+    >
+        <div>✅</div>
+
+        <h2>ส่งรายงานเรียบร้อย</h2>
+
+        <p>
+            ขอบคุณที่ร่วมแจ้งข้อมูลแหล่งน้ำขัง
+        </p>
+
+        <button
+            type="button"
+            onclick="resetReport()"
+            class="submit-button"
+        >
+            แจ้งจุดใหม่
+        </button>
+    </section>
+
+</main>
+
+
+<script src="./js/report-breeding.js"></script>
+
+</body>
+</html>

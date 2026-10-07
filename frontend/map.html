@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>แผนที่พื้นที่เสี่ยงโรคไข้เลือดออก</title>
+
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <!-- Map CSS -->
+    <link rel="stylesheet" href="./css/map.css">
+</head>
+
+<body>
+
+    <!-- ========================================
+         HEADER
+    ========================================= -->
+
+    <header class="map-header">
+
+        <div>
+            <h1>🗺️ แผนที่พื้นที่เสี่ยงโรคไข้เลือดออก</h1>
+
+            <p>
+                ติดตามพื้นที่เฝ้าระวังและระดับความเสี่ยง
+            </p>
+        </div>
+
+        <!--
+            ค่าเริ่มต้นสำหรับผู้ใช้ทั่วไป
+            JavaScript จะเปลี่ยนเป็น "กลับหน้า Admin"
+            เมื่อ URL มี ?from=admin
+        -->
+        <a
+            href="./index.html"
+            class="back-btn"
+            id="backButton"
+        >
+            ← กลับหน้าหลัก
+        </a>
+
+    </header>
+
+
+    <!-- ========================================
+         MAP
+    ========================================= -->
+
+    <main class="map-container">
+
+        <!-- แผนที่ -->
+        <div id="riskMap"></div>
+
+
+        <!-- ========================================
+             SIDEBAR
+        ========================================= -->
+
+        <aside class="map-sidebar">
+
+            <!-- หัวข้อ -->
+            <div class="panel-header">
+
+                <div>
+                    <h2>พื้นที่เฝ้าระวัง</h2>
+
+                    <p>
+                        เลือกพื้นที่เพื่อดูตำแหน่งบนแผนที่
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- ========================================
+                 FILTER
+            ========================================= -->
+
+            <div class="filter-section">
+
+                <label for="riskFilter">
+                    ระดับความเสี่ยง
+                </label>
+
+                <select id="riskFilter">
+
+                    <option value="ทั้งหมด">
+                        ทั้งหมด
+                    </option>
+
+                    <option value="สูง">
+                        เสี่ยงสูง
+                    </option>
+
+                    <option value="ปานกลาง">
+                        เสี่ยงปานกลาง
+                    </option>
+
+                    <option value="ต่ำ">
+                        เสี่ยงต่ำ
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ========================================
+                 LEGEND
+            ========================================= -->
+
+            <div class="map-legend">
+
+                <div class="legend-item">
+                    <span class="legend-dot legend-high"></span>
+                    <span>สูง</span>
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-dot legend-medium"></span>
+                    <span>ปานกลาง</span>
+                </div>
+
+                <div class="legend-item">
+                    <span class="legend-dot legend-low"></span>
+                    <span>ต่ำ</span>
+                </div>
+
+            </div>
+
+
+            <!-- ========================================
+                 AREA HEADING
+            ========================================= -->
+
+            <div class="area-heading">
+
+                <h3>
+                    พื้นที่เฝ้าระวัง
+                </h3>
+
+                <span
+                    id="areaCount"
+                    class="area-count"
+                >
+                    0 พื้นที่
+                </span>
+
+            </div>
+
+
+            <!-- ========================================
+                 AREA LIST
+            ========================================= -->
+
+            <div
+                id="areaList"
+                class="area-list"
+            ></div>
+
+        </aside>
+
+    </main>
+
+
+    <!-- ========================================
+         Leaflet JS
+    ========================================= -->
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+
+    <!-- ========================================
+         ตรวจสอบว่ามาจาก Admin หรือ User
+    ========================================= -->
+
+    <script>
+        const backButton = document.getElementById('backButton');
+
+        const params = new URLSearchParams(window.location.search);
+
+        const from = params.get('from');
+
+
+        // ========================================
+        // เข้ามาจากหน้า Admin
+        // ========================================
+
+        if (from === 'admin') {
+
+            backButton.href = './admin/index.html';
+
+            backButton.textContent = '← กลับหน้า Admin';
+
+        }
+
+        // ========================================
+        // เข้ามาจากหน้าผู้ใช้ทั่วไป
+        // ========================================
+
+        else {
+
+            backButton.href = './index.html';
+
+            backButton.textContent = '← กลับหน้าหลัก';
+
+        }
+    </script>
+
+
+    <!-- Map JavaScript -->
+    <script src="./js/map.js"></script>
+
+</body>
+
+</html>

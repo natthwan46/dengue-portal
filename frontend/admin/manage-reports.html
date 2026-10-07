@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>จัดการข้อมูลพื้นที่เสี่ยง</title>
+
+  <link
+    rel="stylesheet"
+    href="./css/manage-reports.css"
+  >
+</head>
+
+<body>
+
+  <!-- =========================
+       HEADER
+  ========================== -->
+
+  <header class="admin-header">
+
+    <div>
+      <h1>📝 จัดการข้อมูลพื้นที่เสี่ยง</h1>
+
+      <p>
+        เพิ่ม แก้ไข และลบข้อมูลเฝ้าระวังโรคไข้เลือดออก
+      </p>
+    </div>
+
+    <a
+      href="./index.html"
+      class="back-button"
+    >
+      ← กลับ Admin Dashboard
+    </a>
+
+  </header>
+
+
+  <main class="container">
+
+    <!-- =========================
+         SUMMARY
+    ========================== -->
+
+    <section class="summary-grid">
+
+      <div class="summary-card">
+        <span>📍</span>
+
+        <div>
+          <p>พื้นที่ทั้งหมด</p>
+          <strong id="totalAreas">0</strong>
+          <small>พื้นที่</small>
+        </div>
+      </div>
+
+
+      <div class="summary-card high-card">
+        <span>🔴</span>
+
+        <div>
+          <p>เสี่ยงสูง</p>
+          <strong id="highAreas">0</strong>
+          <small>พื้นที่</small>
+        </div>
+      </div>
+
+
+      <div class="summary-card medium-card">
+        <span>🟠</span>
+
+        <div>
+          <p>ปานกลาง</p>
+          <strong id="mediumAreas">0</strong>
+          <small>พื้นที่</small>
+        </div>
+      </div>
+
+
+      <div class="summary-card low-card">
+        <span>🟢</span>
+
+        <div>
+          <p>เสี่ยงต่ำ</p>
+          <strong id="lowAreas">0</strong>
+          <small>พื้นที่</small>
+        </div>
+      </div>
+
+    </section>
+
+
+    <!-- =========================
+         TOOLBAR
+    ========================== -->
+
+    <section class="toolbar">
+
+      <div class="toolbar-title">
+
+        <h2>ข้อมูลพื้นที่เฝ้าระวัง</h2>
+
+        <p>
+          จัดการข้อมูลที่ใช้ใน Dashboard และแผนที่
+        </p>
+
+      </div>
+
+
+      <button
+        type="button"
+        id="addButton"
+        class="add-button"
+      >
+        ＋ เพิ่มข้อมูลพื้นที่
+      </button>
+
+    </section>
+
+
+    <!-- =========================
+         SEARCH / FILTER
+    ========================== -->
+
+    <section class="filter-panel">
+
+      <div class="search-box">
+
+        <span>🔎</span>
+
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="ค้นหาชื่อพื้นที่..."
+        >
+
+      </div>
+
+
+      <select id="riskFilter">
+
+        <option value="all">
+          ทุกระดับความเสี่ยง
+        </option>
+
+        <option value="สูง">
+          เสี่ยงสูง
+        </option>
+
+        <option value="ปานกลาง">
+          เสี่ยงปานกลาง
+        </option>
+
+        <option value="ต่ำ">
+          เสี่ยงต่ำ
+        </option>
+
+      </select>
+
+
+      <button
+        type="button"
+        id="refreshButton"
+        class="refresh-button"
+      >
+        🔄 รีเฟรช
+      </button>
+
+    </section>
+
+
+    <!-- =========================
+         STATUS
+    ========================== -->
+
+    <div
+      id="message"
+      class="message"
+    ></div>
+
+    <div
+      id="loading"
+      class="loading"
+    >
+      กำลังโหลดข้อมูล...
+    </div>
+
+
+    <!-- =========================
+         TABLE
+    ========================== -->
+
+    <section class="table-panel">
+
+      <div class="table-wrapper">
+
+        <table id="reportTable">
+
+          <thead>
+
+            <tr>
+
+              <th>ลำดับ</th>
+
+              <th>พื้นที่</th>
+
+              <th>ระดับความเสี่ยง</th>
+
+              <th>ผู้ป่วย</th>
+
+              <th>พิกัด</th>
+
+              <th>รายละเอียด</th>
+
+              <th>จัดการ</th>
+
+            </tr>
+
+          </thead>
+
+
+          <tbody id="reportTableBody">
+          </tbody>
+
+        </table>
+
+      </div>
+
+
+      <div
+        id="emptyData"
+        class="empty-data"
+      >
+        ไม่พบข้อมูลพื้นที่
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <!-- =========================
+       ADD / EDIT MODAL
+  ========================== -->
+
+  <div
+    id="reportModal"
+    class="modal"
+  >
+
+    <div class="modal-card">
+
+      <div class="modal-header">
+
+        <div>
+
+          <h2 id="modalTitle">
+            เพิ่มข้อมูลพื้นที่
+          </h2>
+
+          <p>
+            กรอกข้อมูลพื้นที่เฝ้าระวัง
+          </p>
+
+        </div>
+
+
+        <button
+          type="button"
+          id="closeModal"
+          class="close-button"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form id="reportForm">
+
+        <!-- เก็บ ID ตอนแก้ไข -->
+
+        <input
+          type="hidden"
+          id="reportId"
+        >
+
+
+        <div class="form-grid">
+
+
+          <!-- AREA -->
+
+          <div class="form-group full-width">
+
+            <label for="area">
+              ชื่อพื้นที่ *
+            </label>
+
+            <input
+              type="text"
+              id="area"
+              placeholder="เช่น ตำบลบางแก้ว"
+              required
+            >
+
+          </div>
+
+
+          <!-- RISK -->
+
+          <div class="form-group">
+
+            <label for="riskLevel">
+              ระดับความเสี่ยง *
+            </label>
+
+            <select
+              id="riskLevel"
+              required
+            >
+
+              <option value="">
+                เลือกระดับความเสี่ยง
+              </option>
+
+              <option value="สูง">
+                🔴 เสี่ยงสูง
+              </option>
+
+              <option value="ปานกลาง">
+                🟠 เสี่ยงปานกลาง
+              </option>
+
+              <option value="ต่ำ">
+                🟢 เสี่ยงต่ำ
+              </option>
+
+            </select>
+
+          </div>
+
+
+          <!-- CASES -->
+
+          <div class="form-group">
+
+            <label for="cases">
+              จำนวนผู้ป่วย *
+            </label>
+
+            <input
+              type="number"
+              id="cases"
+              min="0"
+              value="0"
+              required
+            >
+
+          </div>
+
+
+          <!-- LATITUDE -->
+
+          <div class="form-group">
+
+            <label for="latitude">
+              Latitude
+            </label>
+
+            <input
+              type="number"
+              id="latitude"
+              step="any"
+              placeholder="เช่น 13.7563"
+            >
+
+          </div>
+
+
+          <!-- LONGITUDE -->
+
+          <div class="form-group">
+
+            <label for="longitude">
+              Longitude
+            </label>
+
+            <input
+              type="number"
+              id="longitude"
+              step="any"
+              placeholder="เช่น 100.5018"
+            >
+
+          </div>
+
+
+          <!-- DESCRIPTION -->
+
+          <div class="form-group full-width">
+
+            <label for="description">
+              รายละเอียด
+            </label>
+
+            <textarea
+              id="description"
+              rows="4"
+              placeholder="รายละเอียดสถานการณ์ในพื้นที่"
+            ></textarea>
+
+          </div>
+
+        </div>
+
+
+        <div class="form-note">
+
+          <strong>หมายเหตุ:</strong>
+
+          Latitude และ Longitude
+          ใช้สำหรับแสดงตำแหน่งพื้นที่บนแผนที่
+
+        </div>
+
+
+        <div class="modal-actions">
+
+          <button
+            type="button"
+            id="cancelButton"
+            class="cancel-button"
+          >
+            ยกเลิก
+          </button>
+
+          <button
+            type="submit"
+            id="saveButton"
+            class="save-button"
+          >
+            💾 บันทึกข้อมูล
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================
+       DELETE MODAL
+  ========================== -->
+
+  <div
+    id="deleteModal"
+    class="modal"
+  >
+
+    <div class="delete-card">
+
+      <div class="delete-icon">
+        🗑️
+      </div>
+
+      <h2>
+        ยืนยันการลบข้อมูล
+      </h2>
+
+      <p>
+        ต้องการลบข้อมูล
+        <strong id="deleteAreaName"></strong>
+        หรือไม่?
+      </p>
+
+      <p class="delete-warning">
+        เมื่อลบแล้วข้อมูลจะถูกนำออกจาก
+        Dashboard และแผนที่ด้วย
+      </p>
+
+
+      <div class="delete-actions">
+
+        <button
+          type="button"
+          id="cancelDelete"
+          class="cancel-button"
+        >
+          ยกเลิก
+        </button>
+
+        <button
+          type="button"
+          id="confirmDelete"
+          class="delete-button"
+        >
+          ลบข้อมูล
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <script src="./js/manage-reports.js"></script>
+
+</body>
+
+</html>

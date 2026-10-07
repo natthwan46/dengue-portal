@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>เข้าสู่ระบบแอดมิน</title>
+
+  <link
+    rel="stylesheet"
+    href="./css/login.css"
+  >
+</head>
+
+<body>
+
+  <main class="login-page">
+
+    <section class="login-card">
+
+      <!-- Logo -->
+      <div class="logo">
+        🦟
+      </div>
+
+
+      <!-- Title -->
+      <div class="login-title">
+
+        <h1>
+          เข้าสู่ระบบแอดมิน
+        </h1>
+
+        <p>
+          ระบบเฝ้าระวังและให้ความรู้
+          โรคไข้เลือดออก
+        </p>
+
+      </div>
+
+
+      <!-- Login Form -->
+      <form id="loginForm">
+
+
+        <!-- Username -->
+
+        <div class="form-group">
+
+          <label for="username">
+            ชื่อผู้ใช้งาน
+          </label>
+
+          <div class="input-box">
+
+            <span class="input-icon">
+              👤
+            </span>
+
+            <input
+              type="text"
+              id="username"
+              placeholder="กรอกชื่อผู้ใช้งาน"
+              autocomplete="username"
+              required
+            >
+
+          </div>
+
+        </div>
+
+
+        <!-- Password -->
+
+        <div class="form-group">
+
+          <label for="password">
+            รหัสผ่าน
+          </label>
+
+          <div class="input-box">
+
+            <span class="input-icon">
+              🔒
+            </span>
+
+            <input
+              type="password"
+              id="password"
+              placeholder="กรอกรหัสผ่าน"
+              autocomplete="current-password"
+              required
+            >
+
+            <button
+              type="button"
+              id="togglePassword"
+              class="show-password"
+              aria-label="แสดงหรือซ่อนรหัสผ่าน"
+            >
+              👁
+            </button>
+
+          </div>
+
+        </div>
+
+
+        <!-- Error -->
+
+        <div
+          id="loginError"
+          class="login-error"
+        ></div>
+
+
+        <!-- Login -->
+
+        <button
+          type="submit"
+          class="login-button"
+        >
+          เข้าสู่ระบบ
+        </button>
+
+
+      </form>
+
+
+      <!-- Divider -->
+
+      <div class="divider">
+
+        <span>
+          หรือ
+        </span>
+
+      </div>
+
+
+      <!-- Public -->
+
+      <a
+        href="../index.html"
+        class="public-button"
+      >
+        ← กลับหน้าผู้ใช้งานทั่วไป
+      </a>
+
+
+      <!-- Security -->
+
+      <div class="security">
+
+        🔒 สำหรับผู้ดูแลระบบเท่านั้น
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script src="./js/login.js"></script>
+
+</body>
+
+</html>

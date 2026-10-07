@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ระบบเฝ้าระวังโรคไข้เลือดออก</title>
+
+  <link rel="stylesheet" href="./css/style.css">
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+  <link rel="manifest" href="./manifest.json">
+
+  <meta name="theme-color" content="#5aaed6">
+
+  <link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png">
+
+  <link rel="apple-touch-icon" href="./icons/icon-192.png">
+</head>
+
+<body>
+
+  <!-- ================================
+       HEADER
+  ================================= -->
+
+  <header class="main-header">
+
+    <div class="header-container">
+
+      <div class="brand">
+
+        <div class="brand-icon">
+          🦟
+        </div>
+
+        <div>
+          <h1>ระบบเฝ้าระวังโรคไข้เลือดออก</h1>
+
+          <p>
+            ติดตามสถานการณ์พื้นที่เสี่ยงและข้อมูลโรคไข้เลือดออก
+          </p>
+        </div>
+        <button id="installAppBtn" class="install-app-btn" style="display: none;">
+          📲 ติดตั้งแอป
+        </button>
+
+      </div>
+
+
+      <div class="header-status">
+        <span class="status-dot"></span>
+        ระบบเฝ้าระวัง
+      </div>
+
+    </div>
+
+  </header>
+
+
+  <main>
+
+
+    <!-- ================================
+         เมนูหลัก
+    ================================= -->
+
+    <section class="quick-menu">
+
+      <div class="quick-menu-container">
+
+
+        <!-- แผนที่ -->
+
+        <a href="./map.html" class="quick-card">
+
+          <div class="quick-icon map-icon">
+            🗺️
+          </div>
+
+          <div class="quick-content">
+
+            <h3>ดูแผนที่พื้นที่เสี่ยง</h3>
+
+            <p>
+              ตรวจสอบพื้นที่และระดับความเสี่ยง
+              ของโรคไข้เลือดออก
+            </p>
+
+          </div>
+
+          <span class="quick-arrow">›</span>
+
+        </a>
+
+
+        <!-- ความรู้ -->
+
+        <a href="./knowledge.html" class="quick-card">
+
+          <div class="quick-icon knowledge-icon">
+            📚
+          </div>
+
+          <div class="quick-content">
+
+            <h3>รอบรู้เรื่องไข้เลือดออก</h3>
+
+            <p>
+              เรียนรู้เรื่องอาการ การป้องกัน
+              และการดูแลเบื้องต้น
+            </p>
+
+          </div>
+
+          <span class="quick-arrow">›</span>
+
+        </a>
+
+
+        <!-- ประเมินอาการ -->
+
+        <a href="./assessment.html" class="quick-card">
+
+          <div class="quick-icon assessment-icon">
+            🩺
+          </div>
+
+          <div class="quick-content">
+
+            <h3>ประเมินอาการเบื้องต้น</h3>
+
+            <p>
+              ทำแบบคัดกรองอาการที่เกี่ยวข้อง
+              กับโรคไข้เลือดออก
+            </p>
+
+          </div>
+          <a href="./report-breeding.html" class="quick-card">
+
+            <div class="quick-icon report-icon">
+              📸
+            </div>
+
+            <div class="quick-content">
+              <h3>แจ้งแหล่งน้ำขัง</h3>
+
+              <p>
+                ถ่ายภาพและแจ้งจุดที่อาจเป็นแหล่งเพาะพันธุ์ยุงลาย
+              </p>
+            </div>
+
+            <span class="quick-arrow">›</span>
+
+          </a>
+
+          <span class="quick-arrow">›</span>
+
+        </a>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ================================
+         DASHBOARD
+    ================================= -->
+
+    <section class="dashboard-section">
+
+      <div class="section-heading">
+
+        <div>
+          <h2>ภาพรวมสถานการณ์</h2>
+
+          <p>
+            ข้อมูลสรุปพื้นที่เฝ้าระวังโรคไข้เลือดออก
+          </p>
+        </div>
+
+      </div>
+
+
+      <div class="stats-grid">
+
+
+        <!-- ผู้ป่วยทั้งหมด -->
+
+        <div class="stat-card total-card">
+
+          <div class="stat-top">
+
+            <div>
+              <p>ผู้ป่วยทั้งหมด</p>
+
+              <h3 id="totalCases">0</h3>
+
+              <span>ราย</span>
+            </div>
+
+            <div class="stat-icon total-icon">
+              👥
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- เสี่ยงสูง -->
+
+        <div class="stat-card high-card">
+
+          <div class="stat-top">
+
+            <div>
+              <p>พื้นที่เสี่ยงสูง</p>
+
+              <h3 id="highRisk">0</h3>
+
+              <span>พื้นที่</span>
+            </div>
+
+            <div class="stat-icon high-icon">
+              🔴
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ปานกลาง -->
+
+        <div class="stat-card medium-card">
+
+          <div class="stat-top">
+
+            <div>
+              <p>พื้นที่เสี่ยงปานกลาง</p>
+
+              <h3 id="mediumRisk">0</h3>
+
+              <span>พื้นที่</span>
+            </div>
+
+            <div class="stat-icon medium-icon">
+              🟡
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ต่ำ -->
+
+        <div class="stat-card low-card">
+
+          <div class="stat-top">
+
+            <div>
+              <p>พื้นที่เสี่ยงต่ำ</p>
+
+              <h3 id="lowRisk">0</h3>
+
+              <span>พื้นที่</span>
+            </div>
+
+            <div class="stat-icon low-icon">
+              🟢
+            </div>
+
+          </div>
+
+        </div>
+
+
+      </div>
+
+    </section>
+
+
+
+    <!-- ================================
+         MAP
+    ================================= -->
+
+    <section class="map-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <h2>แผนที่พื้นที่เสี่ยง</h2>
+
+          <p>
+            จุดสีแสดงระดับความเสี่ยงของแต่ละพื้นที่
+          </p>
+
+        </div>
+
+
+        <a href="./map.html" class="view-map-button">
+          ดูแผนที่แบบเต็ม ›
+        </a>
+
+      </div>
+
+
+      <div class="map-legend">
+
+        <span>
+          <i class="dot high-dot"></i>
+          เสี่ยงสูง
+        </span>
+
+        <span>
+          <i class="dot medium-dot"></i>
+          เสี่ยงปานกลาง
+        </span>
+
+        <span>
+          <i class="dot low-dot"></i>
+          เสี่ยงต่ำ
+        </span>
+
+      </div>
+
+
+      <div id="riskMap"></div>
+
+    </section>
+
+
+
+    <!-- ================================
+         TABLE
+    ================================= -->
+
+    <section class="table-section">
+
+      <div class="section-heading">
+
+        <div>
+
+          <h2>ข้อมูลพื้นที่เฝ้าระวัง</h2>
+
+          <p>
+            รายละเอียดจำนวนผู้ป่วยและระดับความเสี่ยง
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <div id="loading" class="loading">
+        กำลังโหลดข้อมูล...
+      </div>
+
+
+      <div id="error" class="error-message"></div>
+
+
+      <div class="table-wrapper">
+
+        <table id="reportTable" style="display: none;">
+
+          <thead>
+
+            <tr>
+              <th>พื้นที่</th>
+              <th>ระดับความเสี่ยง</th>
+              <th>จำนวนผู้ป่วย</th>
+              <th>รายละเอียด</th>
+            </tr>
+
+          </thead>
+
+
+          <tbody id="reportBody">
+          </tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+
+  </main>
+
+
+
+  <!-- ================================
+       FOOTER
+  ================================= -->
+
+  <footer class="main-footer">
+
+    <p>
+      ระบบเฝ้าระวังและให้ความรู้โรคไข้เลือดออก
+    </p>
+
+    <small>
+      ข้อมูลในระบบใช้เพื่อการเฝ้าระวังและให้ความรู้
+    </small>
+
+  </footer>
+
+
+
+  <!-- ================================
+       JAVASCRIPT
+  ================================= -->
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+
+  <script src="./js/app.js"></script>
+
+</body>
+
+</html>
