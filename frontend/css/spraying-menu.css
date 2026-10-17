@@ -1,0 +1,18 @@
+
+.spraying-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  margin: 12px 0;
+  border-radius: 12px;
+  background: #e8f4ed;
+  color: #08754e;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.spraying-menu:hover {
+  background: #cce9da;
+}

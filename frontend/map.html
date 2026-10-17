@@ -1,11 +1,23 @@
+
 <!DOCTYPE html>
 <html lang="th">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>แผนที่พื้นที่เสี่ยงโรคไข้เลือดออก</title>
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="theme-color"
+        content="#5aaed6"
+    >
+
+    <title>
+        แผนที่พื้นที่เสี่ยงโรคไข้เลือดออก
+    </title>
 
     <!-- Leaflet CSS -->
     <link
@@ -14,7 +26,10 @@
     >
 
     <!-- Map CSS -->
-    <link rel="stylesheet" href="./css/map.css">
+    <link
+        rel="stylesheet"
+        href="./css/map.css"
+    >
 </head>
 
 <body>
@@ -26,18 +41,16 @@
     <header class="map-header">
 
         <div>
-            <h1>🗺️ แผนที่พื้นที่เสี่ยงโรคไข้เลือดออก</h1>
+            <h1>
+                🗺️ แผนที่พื้นที่เสี่ยงโรคไข้เลือดออก
+            </h1>
 
             <p>
                 ติดตามพื้นที่เฝ้าระวังและระดับความเสี่ยง
             </p>
         </div>
 
-        <!--
-            ค่าเริ่มต้นสำหรับผู้ใช้ทั่วไป
-            JavaScript จะเปลี่ยนเป็น "กลับหน้า Admin"
-            เมื่อ URL มี ?from=admin
-        -->
+        <!-- ปุ่มกลับหน้าหลัก / Admin -->
         <a
             href="./index.html"
             class="back-btn"
@@ -50,38 +63,59 @@
 
 
     <!-- ========================================
-         MAP
+         MAP CONTAINER
     ========================================= -->
 
     <main class="map-container">
 
-        <!-- แผนที่ -->
+        <!-- แผนที่ OpenStreetMap -->
         <div id="riskMap"></div>
 
 
-        <!-- ========================================
+        <!-- ====================================
+             UPDATE STATUS
+        ===================================== -->
+
+        <div
+            class="map-update-status"
+            id="mapUpdateStatus"
+            role="status"
+            aria-live="polite"
+        >
+            <span
+                class="status-dot"
+                aria-hidden="true"
+            ></span>
+
+            <span id="lastUpdated">
+                กำลังโหลดข้อมูลล่าสุด...
+            </span>
+        </div>
+
+
+        <!-- ====================================
              SIDEBAR
-        ========================================= -->
+        ===================================== -->
 
         <aside class="map-sidebar">
 
             <!-- หัวข้อ -->
             <div class="panel-header">
 
-                <div>
-                    <h2>พื้นที่เฝ้าระวัง</h2>
+                <h2>
+                    พื้นที่เฝ้าระวัง
+                </h2>
 
-                    <p>
-                        เลือกพื้นที่เพื่อดูตำแหน่งบนแผนที่
-                    </p>
-                </div>
+                <p>
+                    เลือกพื้นที่เพื่อดูตำแหน่งบนแผนที่
+                </p>
 
             </div>
 
 
-            <!-- ========================================
+            <!-- =================================
                  FILTER
-            ========================================= -->
+            ================================== -->
 
             <div class="filter-section">
 
@@ -112,33 +146,48 @@
             </div>
 
 
-            <!-- ========================================
+            <!-- =================================
                  LEGEND
-            ========================================= -->
+            ================================== -->
 
             <div class="map-legend">
 
                 <div class="legend-item">
-                    <span class="legend-dot legend-high"></span>
+
+                    <span
+                        class="legend-dot legend-high"
+                    ></span>
+
                     <span>สูง</span>
+
                 </div>
 
                 <div class="legend-item">
-                    <span class="legend-dot legend-medium"></span>
+
+                    <span
+                        class="legend-dot legend-medium"
+                    ></span>
+
                     <span>ปานกลาง</span>
+
                 </div>
 
                 <div class="legend-item">
-                    <span class="legend-dot legend-low"></span>
+
+                    <span
+                        class="legend-dot legend-low"
+                    ></span>
+
                     <span>ต่ำ</span>
+
                 </div>
 
             </div>
 
 
-            <!-- ========================================
+            <!-- =================================
                  AREA HEADING
-            ========================================= -->
+            ================================== -->
 
             <div class="area-heading">
 
@@ -156,14 +205,18 @@
             </div>
 
 
-            <!-- ========================================
+            <!-- =================================
                  AREA LIST
-            ========================================= -->
+            ================================== -->
 
             <div
                 id="areaList"
                 class="area-list"
-            ></div>
+            >
+                <div class="loading-data">
+                    กำลังโหลดข้อมูล...
+                </div>
+            </div>
 
         </aside>
 
@@ -171,53 +224,60 @@
 
 
     <!-- ========================================
-         Leaflet JS
+         LEAFLET JAVASCRIPT
     ========================================= -->
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 
     <!-- ========================================
-         ตรวจสอบว่ามาจาก Admin หรือ User
+         BACK BUTTON CONFIG
     ========================================= -->
 
     <script>
-        const backButton = document.getElementById('backButton');
+        document.addEventListener(
+            'DOMContentLoaded',
+            function () {
 
-        const params = new URLSearchParams(window.location.search);
+                const backButton =
+                    document.getElementById('backButton');
 
-        const from = params.get('from');
+                const params =
+                    new URLSearchParams(
+                        window.location.search
+                    );
 
+                const from =
+                    params.get('from');
 
-        // ========================================
-        // เข้ามาจากหน้า Admin
-        // ========================================
+                // เข้ามาจากหน้า Admin
+                if (from === 'admin') {
 
-        if (from === 'admin') {
+                    backButton.href =
+                        './admin/index.html';
 
-            backButton.href = './admin/index.html';
+                    backButton.textContent =
+                        '← กลับหน้า Admin';
 
-            backButton.textContent = '← กลับหน้า Admin';
+                } else {
 
-        }
+                    // เข้ามาจากหน้าผู้ใช้ทั่วไป
+                    backButton.href =
+                        './index.html';
 
-        // ========================================
-        // เข้ามาจากหน้าผู้ใช้ทั่วไป
-        // ========================================
-
-        else {
-
-            backButton.href = './index.html';
-
-            backButton.textContent = '← กลับหน้าหลัก';
-
-        }
+                    backButton.textContent =
+                        '← กลับหน้าหลัก';
+                }
+            }
+        );
     </script>
 
 
-    <!-- Map JavaScript -->
+    <!-- ========================================
+         MAP JAVASCRIPT
+    ========================================= -->
+
     <script src="./js/map.js"></script>
 
 </body>
-
 </html>

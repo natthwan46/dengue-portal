@@ -1,6 +1,5 @@
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 require('dotenv').config();
 
 const { PrismaClient } = require('@prisma/client');
@@ -9,28 +8,15 @@ const { PrismaLibSql } = require('@prisma/adapter-libsql');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-
-// ==========================================
-// DATABASE
-// ==========================================
-
-const dbPath = path.resolve(
-  __dirname,
-  '../prisma/dev.db'
-);
-
+// เชื่อมต่อฐานข้อมูล Turso
 const adapter = new PrismaLibSql({
-  url: `file:${dbPath}`,
+  url: process.env.DATABASE_URL,
+  authToken: process.env.TURSO_AUTH_TOKEN
 });
 
 const prisma = new PrismaClient({
-  adapter,
+  adapter
 });
-
-
-// ==========================================
-// MIDDLEWARE
-// ==========================================
 
 app.use(cors());
 app.use(express.json());
@@ -652,6 +638,203 @@ function normalizeDescription(value) {
   return text || null;
 
 }
+
+// =======================================
+// SPRAYING SCHEDULE API
+// =======================================
+
+const crypto = require("node:crypto");
+
+function sprayingAdmin(req, res, next) {
+  const expected = process.env.API_ADMIN_KEY;
+  const provided = req.get("x-admin-key") || "";
+
+  if (!expected || !provided) {
+    return res.status(403).json({
+      success: false,
+      message: "ไม่มีสิทธิ์แก้ไขข้อมูล"
+    });
+  }
+
+  const a = Buffer.from(provided);
+  const b = Buffer.from(expected);
+
+  if (a.length !== b.length ||
+    !crypto.timingSafeEqual(a, b)) {
+    return res.status(403).json({
+      success: false,
+      message: "API Key ไม่ถูกต้อง"
+    });
+  }
+
+  next();
+}
+
+function validSchedule(body) {
+  const { district, location, scheduledAt, status, notes } = body;
+
+  if (
+    typeof district !== "string" ||
+    !district.trim() ||
+    district.length > 120 ||
+    typeof location !== "string" ||
+    !location.trim() ||
+    location.length > 250 ||
+    typeof scheduledAt !== "string" ||
+    !Number.isFinite(Date.parse(scheduledAt)) ||
+    !["scheduled", "completed", "cancelled"].includes(status) ||
+    (notes != null && typeof notes !== "string")
+  ) {
+    return null;
+  }
+
+  return {
+    district: district.trim(),
+    location: location.trim(),
+    scheduledAt: new Date(scheduledAt),
+    status,
+    notes: notes || null
+  };
+}
+
+// GET: ผู้ใช้งานดูตารางนัดหมาย
+app.get("/api/spraying", async (req, res) => {
+  try {
+    const { month } = req.query;
+    let where = {};
+
+    if (month !== undefined) {
+      if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(month)) {
+        return res.status(400).json({
+          success: false,
+          message: "รูปแบบเดือนต้องเป็น YYYY-MM"
+        });
+      }
+
+      const [year, m] = month.split("-").map(Number);
+      const start = new Date(Date.UTC(year, m - 1, 1, -7));
+      const end = new Date(Date.UTC(year, m, 1, -7));
+
+      where = {
+        scheduledAt: { gte: start, lt: end }
+      };
+    }
+
+    const data = await prisma.sprayingSchedule.findMany({
+      where,
+      orderBy: { scheduledAt: "asc" }
+    });
+
+    res.set("Cache-Control", "no-store");
+    res.json({ success: true, data });
+
+  } catch (error) {
+    console.error("Spraying GET:", error);
+    res.status(500).json({
+      success: false,
+      message: "ไม่สามารถโหลดตารางพ่นสารเคมีได้"
+    });
+  }
+});
+
+// POST: เพิ่มกำหนดการ
+app.post("/api/spraying", sprayingAdmin, async (req, res) => {
+  try {
+    const data = validSchedule(req.body || {});
+
+    if (!data) {
+      return res.status(400).json({
+        success: false,
+        message: "ข้อมูลกำหนดการไม่ถูกต้อง"
+      });
+    }
+
+    const created = await prisma.sprayingSchedule.create({ data });
+
+    res.status(201).json({
+      success: true,
+      data: created
+    });
+
+  } catch (error) {
+    console.error("Spraying POST:", error);
+    res.status(500).json({
+      success: false,
+      message: "เพิ่มกำหนดการไม่สำเร็จ"
+    });
+  }
+});
+
+// PUT: แก้ไขกำหนดการ
+app.put("/api/spraying/:id", sprayingAdmin, async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+    const data = validSchedule(req.body || {});
+
+    if (!Number.isSafeInteger(id) || id < 1 || !data) {
+      return res.status(400).json({
+        success: false,
+        message: "ข้อมูลไม่ถูกต้อง"
+      });
+    }
+
+    const updated = await prisma.sprayingSchedule.update({
+      where: { id },
+      data
+    });
+
+    res.json({ success: true, data: updated });
+
+  } catch (error) {
+    if (error.code === "P2025") {
+      return res.status(404).json({
+        success: false,
+        message: "ไม่พบรายการ"
+      });
+    }
+
+    console.error("Spraying PUT:", error);
+    res.status(500).json({
+      success: false,
+      message: "แก้ไขกำหนดการไม่สำเร็จ"
+    });
+  }
+});
+
+// DELETE: ลบกำหนดการ
+app.delete("/api/spraying/:id", sprayingAdmin, async (req, res) => {
+  try {
+    const id = Number(req.params.id);
+
+    if (!Number.isSafeInteger(id) || id < 1) {
+      return res.status(400).json({
+        success: false,
+        message: "รหัสรายการไม่ถูกต้อง"
+      });
+    }
+
+    await prisma.sprayingSchedule.delete({
+      where: { id }
+    });
+
+    res.json({ success: true });
+
+  } catch (error) {
+    if (error.code === "P2025") {
+      return res.status(404).json({
+        success: false,
+        message: "ไม่พบรายการ"
+      });
+    }
+
+    console.error("Spraying DELETE:", error);
+    res.status(500).json({
+      success: false,
+      message: "ลบกำหนดการไม่สำเร็จ"
+    });
+  }
+});
+
 
 
 // ==========================================

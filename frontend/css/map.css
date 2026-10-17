@@ -1,6 +1,11 @@
-/* =========================
-   THEME
-========================= */
+
+/* ========================================
+   DENGUE PORTAL - MAP CSS
+   ======================================== */
+
+/* ========================================
+   1. THEME
+   ======================================== */
 
 :root {
     --primary: #5aaed6;
@@ -24,10 +29,9 @@
     --low: #16a34a;
 }
 
-
-/* =========================
-   RESET
-========================= */
+/* ========================================
+   2. RESET
+   ======================================== */
 
 * {
     box-sizing: border-box;
@@ -43,21 +47,17 @@ body {
 
 body {
     font-family: Arial, "Noto Sans Thai", sans-serif;
-
     background: var(--background);
     color: var(--text);
-
     overflow: hidden;
 }
 
-
-/* =========================
-   HEADER
-========================= */
+/* ========================================
+   3. HEADER
+   ======================================== */
 
 .map-header {
     height: 82px;
-
     background: linear-gradient(
         135deg,
         #5aaed6,
@@ -69,33 +69,34 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 16px;
 
     padding: 0 32px;
 
     position: relative;
     z-index: 1000;
 
-    box-shadow: 0 3px 12px rgba(61, 143, 186, 0.18);
+    box-shadow: 0 3px 12px rgba(
+        61, 143, 186, 0.18
+    );
 }
 
 .map-header h1 {
     font-size: 22px;
-
     margin-bottom: 5px;
 }
 
 .map-header p {
     font-size: 13px;
-
     color: #eefaff;
 }
 
-
-/* =========================
-   BACK BUTTON
-========================= */
+/* ========================================
+   4. BACK BUTTON
+   ======================================== */
 
 .back-btn {
+    flex-shrink: 0;
     text-decoration: none;
 
     color: var(--primary-dark);
@@ -103,29 +104,31 @@ body {
 
     padding: 9px 15px;
 
-    border: 1px solid rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(
+        255, 255, 255, 0.6
+    );
+
     border-radius: 8px;
 
     font-size: 13px;
     font-weight: 600;
 
-    box-shadow: 0 3px 10px rgba(47, 119, 158, 0.12);
+    box-shadow: 0 3px 10px rgba(
+        47, 119, 158, 0.12
+    );
 
     transition: 0.2s;
 }
 
 .back-btn:hover {
     background: #eefaff;
-
     color: var(--primary-deep);
-
     transform: translateY(-2px);
 }
 
-
-/* =========================
-   MAP CONTAINER
-========================= */
+/* ========================================
+   5. MAP CONTAINER
+   ======================================== */
 
 .map-container {
     position: relative;
@@ -133,12 +136,14 @@ body {
     width: 100%;
 
     height: calc(100vh - 82px);
+    height: calc(100dvh - 82px);
+
+    overflow: hidden;
 }
 
-
-/* =========================
-   MAP
-========================= */
+/* ========================================
+   6. MAP
+   ======================================== */
 
 #riskMap {
     position: absolute;
@@ -154,10 +159,90 @@ body {
     background: #e8f3f8;
 }
 
+/* ========================================
+   7. REAL-TIME UPDATE STATUS
+   ======================================== */
 
-/* =========================
-   CONTROL PANEL
-========================= */
+.map-update-status {
+    position: absolute;
+
+    top: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+
+    padding: 10px 16px;
+
+    max-width: calc(100% - 140px);
+
+    background: rgba(
+        255, 255, 255, 0.97
+    );
+
+    border: 1px solid var(--border);
+    border-radius: 30px;
+
+    box-shadow: 0 4px 15px rgba(
+        47, 119, 158, 0.15
+    );
+
+    color: var(--primary-deep);
+    font-size: 12px;
+    font-weight: 600;
+
+    z-index: 600;
+
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* จุดสถานะ */
+
+.status-dot {
+    width: 9px;
+    height: 9px;
+
+    background: var(--low);
+    border-radius: 50%;
+
+    flex-shrink: 0;
+
+    animation: statusPulse 2s infinite;
+}
+
+@keyframes statusPulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.4;
+    }
+}
+
+/* โหลดข้อมูลผิดพลาด */
+
+.map-update-status.is-error {
+    color: #b91c1c;
+    border-color: #fecaca;
+    background: rgba(
+        254, 242, 242, 0.97
+    );
+}
+
+.map-update-status.is-error .status-dot {
+    background: var(--high);
+    animation: none;
+}
+
+/* ========================================
+   8. CONTROL PANEL
+   ======================================== */
 
 .map-sidebar {
     position: absolute;
@@ -166,16 +251,20 @@ body {
     bottom: 20px;
 
     width: 280px;
-    max-height: 420px;
+    max-height: min(420px, calc(100% - 90px));
 
-    background: rgba(255, 255, 255, 0.97);
+    background: rgba(
+        255, 255, 255, 0.97
+    );
 
     padding: 14px;
 
     border: 1px solid var(--border);
     border-radius: 14px;
 
-    box-shadow: 0 8px 25px rgba(47, 119, 158, 0.18);
+    box-shadow: 0 8px 25px rgba(
+        47, 119, 158, 0.18
+    );
 
     z-index: 500;
 
@@ -185,10 +274,9 @@ body {
     backdrop-filter: blur(6px);
 }
 
-
-/* =========================
-   PANEL HEADER
-========================= */
+/* ========================================
+   9. PANEL HEADER
+   ======================================== */
 
 .panel-header {
     margin-bottom: 10px;
@@ -196,22 +284,18 @@ body {
 
 .panel-header h2 {
     font-size: 17px;
-
     margin-bottom: 3px;
-
     color: var(--text-dark);
 }
 
 .panel-header p {
     font-size: 11px;
-
     color: var(--text-light);
 }
 
-
-/* =========================
-   FILTER
-========================= */
+/* ========================================
+   10. FILTER
+   ======================================== */
 
 .filter-section {
     margin-bottom: 9px;
@@ -238,13 +322,11 @@ body {
     border-radius: 7px;
 
     background: white;
-
     color: var(--text);
 
     font-size: 12px;
 
     outline: none;
-
     cursor: pointer;
 
     transition: 0.2s;
@@ -257,19 +339,22 @@ body {
 #riskFilter:focus {
     border-color: var(--primary);
 
-    box-shadow: 0 0 0 3px rgba(90, 174, 214, 0.12);
+    box-shadow: 0 0 0 3px rgba(
+        90, 174, 214, 0.12
+    );
 }
 
-
-/* =========================
-   LEGEND
-========================= */
+/* ========================================
+   11. LEGEND
+   ======================================== */
 
 .map-legend {
     display: flex;
 
     align-items: center;
     justify-content: space-between;
+
+    gap: 6px;
 
     background: #edf8fd;
 
@@ -283,13 +368,11 @@ body {
 
 .legend-item {
     display: flex;
-
     align-items: center;
 
     gap: 4px;
 
     font-size: 10px;
-
     color: #475569;
 }
 
@@ -298,10 +381,9 @@ body {
     height: 8px;
 
     border-radius: 50%;
+
+    flex-shrink: 0;
 }
-
-
-/* ระดับความเสี่ยง */
 
 .legend-high {
     background: var(--high);
@@ -315,10 +397,9 @@ body {
     background: var(--low);
 }
 
-
-/* =========================
-   AREA HEADER
-========================= */
+/* ========================================
+   12. AREA HEADING
+   ======================================== */
 
 .area-heading {
     display: flex;
@@ -326,12 +407,13 @@ body {
     align-items: center;
     justify-content: space-between;
 
+    gap: 8px;
+
     margin-bottom: 6px;
 }
 
 .area-heading h3 {
     color: var(--text-dark);
-
     font-size: 12px;
 }
 
@@ -343,17 +425,18 @@ body {
     border-radius: 20px;
 
     font-size: 9px;
-
     color: var(--primary-deep);
+
+    white-space: nowrap;
 }
 
-
-/* =========================
-   AREA LIST
-========================= */
+/* ========================================
+   13. AREA LIST
+   ======================================== */
 
 .area-list {
     max-height: 190px;
+    min-height: 0;
 
     overflow-y: auto;
 
@@ -363,6 +446,8 @@ body {
     flex-direction: column;
 
     gap: 5px;
+
+    overscroll-behavior: contain;
 }
 
 .area-list::-webkit-scrollbar {
@@ -371,13 +456,11 @@ body {
 
 .area-list::-webkit-scrollbar-track {
     background: #eef7fb;
-
     border-radius: 10px;
 }
 
 .area-list::-webkit-scrollbar-thumb {
     background: #a9d5e8;
-
     border-radius: 10px;
 }
 
@@ -385,14 +468,12 @@ body {
     background: var(--primary);
 }
 
-
-/* =========================
-   AREA CARD
-========================= */
+/* ========================================
+   14. AREA CARD
+   ======================================== */
 
 .area-item {
     border: 1px solid var(--border);
-
     border-radius: 7px;
 
     padding: 7px 8px;
@@ -400,16 +481,17 @@ body {
     background: white;
 
     cursor: pointer;
-
     transition: 0.2s;
 }
 
 .area-item:hover {
     background: #f0f9fd;
-
     border-color: var(--primary);
-
     transform: translateX(2px);
+}
+
+.area-item:active {
+    background: #e8f6fd;
 }
 
 .area-name {
@@ -426,18 +508,18 @@ body {
 
     align-items: center;
     justify-content: space-between;
+
+    gap: 8px;
 }
 
 .case-count {
     font-size: 10px;
-
     color: var(--text-light);
 }
 
-
-/* =========================
-   RISK BADGE
-========================= */
+/* ========================================
+   15. RISK BADGE
+   ======================================== */
 
 .risk-badge {
     padding: 2px 6px;
@@ -446,39 +528,59 @@ body {
 
     font-size: 9px;
     font-weight: 600;
+
+    white-space: nowrap;
 }
-
-
-/* ความเสี่ยงสูง */
 
 .risk-high {
     background: #fee2e2;
-
     color: #b91c1c;
 }
 
-
-/* ความเสี่ยงปานกลาง */
-
 .risk-medium {
     background: #fef3c7;
-
     color: #b45309;
 }
 
-
-/* ความเสี่ยงต่ำ */
-
 .risk-low {
     background: #dcfce7;
-
     color: #15803d;
 }
 
+/* ========================================
+   16. LOADING / ERROR / EMPTY
+   ======================================== */
 
-/* =========================
-   LEAFLET
-========================= */
+.loading-data,
+.error-data,
+.no-data {
+    padding: 18px 10px;
+
+    text-align: center;
+
+    font-size: 12px;
+
+    border-radius: 8px;
+}
+
+.loading-data {
+    color: var(--primary-deep);
+    background: #edf8fd;
+}
+
+.error-data {
+    color: #b91c1c;
+    background: #fef2f2;
+}
+
+.no-data {
+    color: var(--text-light);
+    background: #f8fafc;
+}
+
+/* ========================================
+   17. LEAFLET
+   ======================================== */
 
 .leaflet-container {
     width: 100%;
@@ -487,32 +589,32 @@ body {
     font-family: Arial, "Noto Sans Thai", sans-serif;
 }
 
-
 /* Popup */
 
 .leaflet-popup-content-wrapper {
     border: 1px solid var(--border);
-
     border-radius: 10px;
 
-    box-shadow: 0 5px 20px rgba(47, 119, 158, 0.15);
+    box-shadow: 0 5px 20px rgba(
+        47, 119, 158, 0.15
+    );
 }
 
 .leaflet-popup-content {
     min-width: 180px;
 
     font-size: 12px;
-
     color: var(--text);
 }
 
-
-/* ปุ่ม Zoom ของ Leaflet */
+/* Zoom Controls */
 
 .leaflet-control-zoom {
     border: none !important;
 
-    box-shadow: 0 3px 12px rgba(47, 119, 158, 0.15) !important;
+    box-shadow: 0 3px 12px rgba(
+        47, 119, 158, 0.15
+    ) !important;
 }
 
 .leaflet-control-zoom a {
@@ -523,56 +625,161 @@ body {
     background: #e8f6fd !important;
 }
 
-
 /* Attribution */
 
 .leaflet-control-attribution {
     font-size: 9px !important;
 }
 
+/* ========================================
+   18. TABLET
+   ======================================== */
 
-/* =========================
-   MOBILE
-========================= */
-
-@media (max-width: 768px) {
-
+@media (max-width: 1024px) {
     .map-header {
-        height: 70px;
-
-        padding: 0 15px;
+        padding: 0 20px;
     }
 
     .map-header h1 {
-        font-size: 16px;
+        font-size: 19px;
+    }
+
+    .map-sidebar {
+        left: 15px;
+        bottom: 15px;
+    }
+}
+
+/* ========================================
+   19. MOBILE
+   ======================================== */
+
+@media (max-width: 768px) {
+    .map-header {
+        height: 70px;
+        padding: 0 12px;
+        gap: 8px;
+    }
+
+    .map-header h1 {
+        font-size: 15px;
+        line-height: 1.3;
     }
 
     .map-header p {
         font-size: 10px;
+        line-height: 1.3;
     }
 
     .back-btn {
-        padding: 7px 10px;
-
+        padding: 7px 9px;
         font-size: 10px;
     }
 
     .map-container {
         height: calc(100vh - 70px);
+        height: calc(100dvh - 70px);
+    }
+
+    .map-update-status {
+        top: 12px;
+
+        max-width: calc(100% - 125px);
+
+        padding: 8px 11px;
+
+        font-size: 10px;
+
+        white-space: normal;
+        text-align: center;
     }
 
     .map-sidebar {
         left: 10px;
-        bottom: 10px;
+        bottom: max(
+            10px,
+            env(safe-area-inset-bottom)
+        );
 
-        width: 245px;
+        width: min(
+            245px,
+            calc(100% - 20px)
+        );
 
-        max-height: 330px;
+        max-height: 45%;
 
         padding: 10px;
     }
 
+    .panel-header h2 {
+        font-size: 14px;
+    }
+
+    .panel-header p {
+        font-size: 10px;
+    }
+
     .area-list {
         max-height: 130px;
+    }
+
+    .area-item {
+        padding: 7px;
+    }
+
+    .leaflet-control-zoom {
+        margin-top: 65px !important;
+    }
+}
+
+/* ========================================
+   20. SMALL MOBILE
+   ======================================== */
+
+@media (max-width: 390px) {
+    .map-header h1 {
+        font-size: 13px;
+    }
+
+    .map-header p {
+        font-size: 9px;
+    }
+
+    .back-btn {
+        font-size: 9px;
+        padding: 7px;
+    }
+
+    .map-update-status {
+        font-size: 9px;
+        padding: 7px 9px;
+    }
+
+    .map-sidebar {
+        width: min(
+            230px,
+            calc(100% - 20px)
+        );
+
+        max-height: 42%;
+    }
+
+    .legend-item {
+        font-size: 9px;
+    }
+}
+
+/* ========================================
+   21. REDUCED MOTION
+   ======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .status-dot {
+        animation: none;
+    }
+
+    .area-item,
+    .back-btn {
+        transition: none;
     }
 }

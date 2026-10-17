@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ตารางพ่นสารเคมีกำจัดยุง</title>
+  <link rel="stylesheet" href="./css/spraying.css">
+</head>
+<body>
+  <header>
+    <h1>ตารางพ่นสารเคมีกำจัดยุง</h1>
+    <a href="./index.html">← กลับหน้าหลัก</a>
+  </header>
+
+  <main>
+    <section>
+      <h2>ค้นหากำหนดการ</h2>
+      <div class="filters">
+        <label>เดือน
+          <input type="month" id="month">
+        </label>
+
+        <label>เขต
+          <select id="district">
+            <option value="">ทุกเขต</option>
+          </select>
+        </label>
+
+        <button id="reload">โหลดข้อมูลล่าสุด</button>
+      </div>
+      <p class="hint">
+        จำนวนครั้งคำนวณจากกำหนดการที่บันทึกไว้
+        ไม่ใช่จำนวนครั้งที่แนะนำให้พ่นสารเคมี
+      </p>
+    </section>
+
+    <section>
+      <h2>จำนวนครั้งต่อเขตในเดือนนี้</h2>
+      <div class="stats" id="stats"></div>
+    </section>
+
+    <section>
+      <h2>ตารางนัดหมาย</h2>
+      <p id="message" role="status"></p>
+
+      <div class="scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>เขต</th>
+              <th>สถานที่</th>
+              <th>วันและเวลา</th>
+              <th>สถานะ</th>
+              <th>หมายเหตุ</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="./js/spraying.js"></script>
+</body>
+</html>

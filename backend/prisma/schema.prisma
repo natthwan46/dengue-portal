@@ -17,3 +17,14 @@ model DengueReport {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model SprayingSchedule {
+  id          Int      @id @default(autoincrement())
+  district    String
+  location    String
+  scheduledAt DateTime
+  status      String   @default("scheduled")
+  notes       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
