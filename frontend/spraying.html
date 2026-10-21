@@ -1,66 +1,113 @@
 
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ตารางพ่นสารเคมีกำจัดยุง</title>
-  <link rel="stylesheet" href="./css/spraying.css">
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>ตารางพ่นสารเคมีกำจัดยุง | Dengue Portal</title>
+
+    <link rel="stylesheet" href="./css/spraying.css">
 </head>
+
 <body>
-  <header>
-    <h1>ตารางพ่นสารเคมีกำจัดยุง</h1>
-    <a href="./index.html">← กลับหน้าหลัก</a>
-  </header>
 
-  <main>
-    <section>
-      <h2>ค้นหากำหนดการ</h2>
-      <div class="filters">
-        <label>เดือน
-          <input type="month" id="month">
-        </label>
+    <header>
+        <h1>🦟 ตารางพ่นสารเคมีกำจัดยุง</h1>
+        <p>ระบบเฝ้าระวังและป้องกันโรคไข้เลือดออก</p>
 
-        <label>เขต
-          <select id="district">
-            <option value="">ทุกเขต</option>
-          </select>
-        </label>
+        <nav>
+            <a href="./index.html">← กลับหน้าหลัก</a>
+        </nav>
+    </header>
 
-        <button id="reload">โหลดข้อมูลล่าสุด</button>
-      </div>
-      <p class="hint">
-        จำนวนครั้งคำนวณจากกำหนดการที่บันทึกไว้
-        ไม่ใช่จำนวนครั้งที่แนะนำให้พ่นสารเคมี
-      </p>
-    </section>
+    <main>
 
-    <section>
-      <h2>จำนวนครั้งต่อเขตในเดือนนี้</h2>
-      <div class="stats" id="stats"></div>
-    </section>
+        <section>
+            <h2>📅 ตรวจสอบกำหนดการพ่นสารเคมี</h2>
+            <p>
+                ตรวจสอบข้อมูลการพ่นสารเคมีกำจัดยุง
+                ในพื้นที่ 50 เขต กรุงเทพมหานคร
+            </p>
 
-    <section>
-      <h2>ตารางนัดหมาย</h2>
-      <p id="message" role="status"></p>
+            <div class="filters">
 
-      <div class="scroll">
-        <table>
-          <thead>
-            <tr>
-              <th>เขต</th>
-              <th>สถานที่</th>
-              <th>วันและเวลา</th>
-              <th>สถานะ</th>
-              <th>หมายเหตุ</th>
-            </tr>
-          </thead>
-          <tbody id="rows"></tbody>
-        </table>
-      </div>
-    </section>
-  </main>
+                <label for="month">
+                    เลือกเดือน
+                    <input type="month" id="month">
+                </label>
 
-  <script src="./js/spraying.js"></script>
+                <label for="district">
+                    เลือกเขต
+                    <select id="district">
+                        <option value="">ทุกเขต</option>
+                    </select>
+                </label>
+
+                <button type="button" id="reload">
+                    🔄 โหลดข้อมูลล่าสุด
+                </button>
+
+            </div>
+        </section>
+
+        <section>
+            <h2>📊 สรุปจำนวนครั้งที่กำหนดพ่นสารเคมี</h2>
+            <div id="stats">
+                กำลังโหลดข้อมูล...
+            </div>
+        </section>
+
+        <section>
+            <h2>📋 รายการกำหนดการพ่นสารเคมี</h2>
+
+            <p id="message" role="status" aria-live="polite"></p>
+
+            <div class="scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>เขต</th>
+                            <th>สถานที่</th>
+                            <th>วันและเวลา</th>
+                            <th>สถานะ</th>
+                            <th>หมายเหตุ</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="rows">
+                        <tr>
+                            <td colspan="5">
+                                กำลังโหลดข้อมูล...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <p class="hint">
+            หมายเหตุ: ข้อมูลแสดงตามกำหนดการที่บันทึกไว้
+            ในระบบ กรุณาตรวจสอบกับหน่วยงานที่รับผิดชอบ
+            ก่อนเดินทางหรือเข้าร่วมกิจกรรม
+        </p>
+
+    </main>
+
+    <footer>
+        <p>
+            Dengue Portal |
+            ระบบเฝ้าระวังและป้องกันโรคไข้เลือดออก
+        </p>
+    </footer>
+
+    <!-- รายชื่อ 50 เขต -->
+    <script src="./js/bangkok-districts.js"></script>
+
+    <!-- ระบบแสดงตารางพ่นสารเคมี -->
+    <script src="./js/spraying.js"></script>
+
 </body>
 </html>
