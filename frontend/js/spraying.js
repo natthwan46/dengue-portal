@@ -1,96 +1,97 @@
 
+"use strict";
+
 /* ==========================================
    DENGUE PORTAL
-   ตารางพ่นสารเคมีกำจัดยุง
-   สำหรับ 50 เขต กรุงเทพมหานคร
+   ตารางพ่นสารเคมีกำจัดยุงสำหรับประชาชน
 ========================================== */
 
-/* ==========================================
-   1. API CONFIG
-========================================== */
+/*
+  ใช้ API บนโดเมนเดียวกับเว็บไซต์เป็นค่าเริ่มต้น
 
-// Backend สำหรับทดสอบในเครื่อง
-const API_URL = "http://localhost:5000/api/spraying";
+  หาก Backend อยู่คนละโดเมน ให้กำหนด URL จริง เช่น
+  window.DENGUE_API_BASE_URL = "https://your-backend.example.com";
 
-// เมื่อ Deploy ต้องเปลี่ยนเป็น URL Backend ออนไลน์
-// ตัวอย่าง:
-// const API_URL = "https://your-backend.onrender.com/api/spraying";
+  ต้องกำหนดค่าดังกล่าวก่อนโหลดไฟล์ spraying.js
+*/
 
-const REFRESH_INTERVAL = 60 * 1000;
+const API_BASE_URL = String(
+    window.DENGUE_API_BASE_URL || ""
+).replace(/\/+$/, "");
 
-/* ==========================================
-   2. รายชื่อ 50 เขต กรุงเทพมหานคร
-========================================== */
+const API_URL = `${API_BASE_URL}/api/spraying`;
 
-const BANGKOK_DISTRICTS = [
-    "คลองเตย",
-    "คลองสาน",
-    "คลองสามวา",
-    "คันนายาว",
-    "จตุจักร",
-    "จอมทอง",
-    "ดอนเมือง",
-    "ดินแดง",
-    "ดุสิต",
-    "ตลิ่งชัน",
-    "ทวีวัฒนา",
-    "ทุ่งครุ",
-    "ธนบุรี",
-    "บางกอกน้อย",
-    "บางกอกใหญ่",
-    "บางกะปิ",
-    "บางขุนเทียน",
-    "บางเขน",
-    "บางคอแหลม",
-    "บางแค",
-    "บางซื่อ",
-    "บางนา",
-    "บางบอน",
-    "บางพลัด",
-    "บางรัก",
-    "บึงกุ่ม",
-    "ปทุมวัน",
-    "ประเวศ",
-    "ป้อมปราบศัตรูพ่าย",
-    "พญาไท",
-    "พระโขนง",
-    "พระนคร",
-    "ภาษีเจริญ",
-    "มีนบุรี",
-    "ยานนาวา",
-    "ราชเทวี",
-    "ราษฎร์บูรณะ",
-    "ลาดกระบัง",
-    "ลาดพร้าว",
-    "วังทองหลาง",
-    "วัฒนา",
-    "สวนหลวง",
-    "สะพานสูง",
-    "สัมพันธวงศ์",
-    "สาทร",
-    "สายไหม",
-    "หนองแขม",
-    "หนองจอก",
-    "หลักสี่",
-    "ห้วยขวาง"
-];
+const $ = (id) => document.getElementById(id);
 
-/* ==========================================
-   3. HTML ELEMENTS
-========================================== */
-
-const month = document.getElementById("month");
-const district = document.getElementById("district");
-const rows = document.getElementById("rows");
-const stats = document.getElementById("stats");
-const message = document.getElementById("message");
-const reload = document.getElementById("reload");
+const month = $("month");
+const district = $("district");
+const rows = $("rows");
+const stats = $("stats");
+const message = $("message");
+const reload = $("reload");
 
 let records = [];
 let isLoading = false;
 
 /* ==========================================
-   4. STATUS
+   รายชื่อ 50 เขต กรุงเทพมหานคร
+========================================== */
+
+const BANGKOK_DISTRICTS = [
+  "คลองเตย",
+  "คลองสาน",
+  "คลองสามวา",
+  "คันนายาว",
+  "จตุจักร",
+  "จอมทอง",
+  "ดอนเมือง",
+  "ดินแดง",
+  "ดุสิต",
+  "ตลิ่งชัน",
+  "ทวีวัฒนา",
+  "ทุ่งครุ",
+  "ธนบุรี",
+  "บางกอกน้อย",
+  "บางกอกใหญ่",
+  "บางกะปิ",
+  "บางขุนเทียน",
+  "บางเขน",
+  "บางคอแหลม",
+  "บางแค",
+  "บางซื่อ",
+  "บางนา",
+  "บางบอน",
+  "บางพลัด",
+  "บางรัก",
+  "บึงกุ่ม",
+  "ปทุมวัน",
+  "ประเวศ",
+  "ป้อมปราบศัตรูพ่าย",
+  "พญาไท",
+  "พระโขนง",
+  "พระนคร",
+  "ภาษีเจริญ",
+  "มีนบุรี",
+  "ยานนาวา",
+  "ราชเทวี",
+  "ราษฎร์บูรณะ",
+  "ลาดกระบัง",
+  "ลาดพร้าว",
+  "วังทองหลาง",
+  "วัฒนา",
+  "สวนหลวง",
+  "สะพานสูง",
+  "สัมพันธวงศ์",
+  "สาทร",
+  "สายไหม",
+  "หนองแขม",
+  "หนองจอก",
+  "หลักสี่",
+  "ห้วยขวาง"
+];
+
+/* ==========================================
+   สถานะ
 ========================================== */
 
 const statusNames = {
@@ -100,7 +101,7 @@ const statusNames = {
 };
 
 /* ==========================================
-   5. จัดรูปแบบชื่อเขต
+   จัดรูปแบบข้อมูล
 ========================================== */
 
 function normalizeDistrict(value) {
@@ -110,81 +111,7 @@ function normalizeDistrict(value) {
         .trim();
 }
 
-/* ==========================================
-   6. สร้าง Dropdown 50 เขต
-========================================== */
-
-function populateBangkokDistricts() {
-    if (!district) return;
-
-    const previousValue = normalizeDistrict(district.value);
-
-    district.replaceChildren();
-
-    district.add(
-        new Option("ทุกเขตในกรุงเทพมหานคร", "")
-    );
-
-    BANGKOK_DISTRICTS.forEach((name) => {
-        district.add(
-            new Option(`เขต${name}`, name)
-        );
-    });
-
-    if (BANGKOK_DISTRICTS.includes(previousValue)) {
-        district.value = previousValue;
-    }
-}
-
-/* ==========================================
-   7. กรองข้อมูลตามเขต
-========================================== */
-
-function filterByDistrict(reports, selectedDistrict) {
-    if (!selectedDistrict) {
-        return reports;
-    }
-
-    return reports.filter((report) => {
-        const reportDistrict = normalizeDistrict(
-            report.district
-        );
-
-        return reportDistrict === normalizeDistrict(
-            selectedDistrict
-        );
-    });
-}
-
-/* ==========================================
-   8. เดือนปัจจุบันตามเวลาไทย
-========================================== */
-
-function getCurrentMonth() {
-    const parts = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Asia/Bangkok",
-        year: "numeric",
-        month: "2-digit"
-    }).formatToParts(new Date());
-
-    const year = parts.find(
-        p => p.type === "year"
-    ).value;
-
-    const monthNumber = parts.find(
-        p => p.type === "month"
-    ).value;
-
-    return `${year}-${monthNumber}`;
-}
-
-/* ==========================================
-   9. แปลงวันที่เป็นภาษาไทย
-========================================== */
-
 function thaiDate(value) {
-    if (!value) return "-";
-
     const date = new Date(value);
 
     if (Number.isNaN(date.getTime())) {
@@ -198,8 +125,100 @@ function thaiDate(value) {
     });
 }
 
+function getBangkokMonth(value) {
+    const date = new Date(value);
+
+    if (Number.isNaN(date.getTime())) {
+        return "";
+    }
+
+    const parts = new Intl.DateTimeFormat("en-US", {
+        timeZone: "Asia/Bangkok",
+        year: "numeric",
+        month: "2-digit"
+    }).formatToParts(date);
+
+    const values = Object.fromEntries(
+        parts.map((part) => [part.type, part.value])
+    );
+
+    return `${values.year}-${values.month}`;
+}
+
+function currentBangkokMonth() {
+    return getBangkokMonth(new Date());
+}
+
 /* ==========================================
-   10. เพิ่มเซลล์ในตาราง
+   สร้างรายการเขต
+========================================== */
+
+function populateDistricts() {
+    if (!district) return;
+
+    const selected = district.value;
+
+    district.replaceChildren();
+
+    const allOption = document.createElement("option");
+    allOption.value = "";
+    allOption.textContent = "ทุกเขต";
+
+    district.appendChild(allOption);
+
+    const uniqueDistricts = [
+        ...new Set(BANGKOK_DISTRICTS)
+    ].sort((a, b) => a.localeCompare(b, "th"));
+
+    uniqueDistricts.forEach((name) => {
+        const option = document.createElement("option");
+
+        option.value = name;
+        option.textContent = `เขต${name}`;
+
+        district.appendChild(option);
+    });
+
+    district.value = selected;
+}
+
+/* ==========================================
+   แสดงข้อความ
+========================================== */
+
+function showMessage(text = "") {
+    if (message) {
+        message.textContent = text;
+    }
+}
+
+/* ==========================================
+   กรองข้อมูล
+========================================== */
+
+function filterRecords() {
+    const selectedMonth = month?.value || "";
+    const selectedDistrict = normalizeDistrict(
+        district?.value || ""
+    );
+
+    return records.filter((item) => {
+        const itemDistrict = normalizeDistrict(item.district);
+
+        const matchDistrict =
+            !selectedDistrict ||
+            itemDistrict === selectedDistrict;
+
+        const matchMonth =
+            !selectedMonth ||
+            getBangkokMonth(item.scheduledAt) === selectedMonth;
+
+        return matchDistrict && matchMonth;
+    });
+}
+
+/* ==========================================
+   สร้างเซลล์ตาราง
 ========================================== */
 
 function addCell(tr, value) {
@@ -213,201 +232,102 @@ function addCell(tr, value) {
 }
 
 /* ==========================================
-   11. แสดงข้อความสถานะ
-========================================== */
-
-function showMessage(text, isError = false) {
-    if (!message) return;
-
-    message.className = isError
-        ? "result-message error"
-        : "result-message";
-
-    message.textContent = text;
-}
-
-/* ==========================================
-   12. ตรวจสอบเดือนของรายการ
-========================================== */
-
-function getBangkokMonth(value) {
-    if (!value) return "";
-
-    const date = new Date(value);
-
-    if (Number.isNaN(date.getTime())) {
-        return "";
-    }
-
-    const parts = new Intl.DateTimeFormat("en-US", {
-        timeZone: "Asia/Bangkok",
-        year: "numeric",
-        month: "2-digit"
-    }).formatToParts(date);
-
-    const year = parts.find(
-        p => p.type === "year"
-    ).value;
-
-    const monthNumber = parts.find(
-        p => p.type === "month"
-    ).value;
-
-    return `${year}-${monthNumber}`;
-}
-
-/* ==========================================
-   13. กรองข้อมูลตามเดือน
-========================================== */
-
-function filterByMonth(reports, selectedMonth) {
-    if (!selectedMonth) {
-        return reports;
-    }
-
-    return reports.filter((report) => {
-        return getBangkokMonth(report.scheduledAt)
-            === selectedMonth;
-    });
-}
-
-/* ==========================================
-   14. แสดงตารางและสถิติ
+   แสดงตาราง
 ========================================== */
 
 function displayReports() {
-    if (!rows || !stats || !district || !month) {
-        return;
-    }
+    if (!rows) return;
 
     rows.replaceChildren();
-    stats.replaceChildren();
 
-    // กรองเดือน
-    const monthFiltered = filterByMonth(
-        records,
-        month.value
-    );
-
-    // กรองเขต
-    const filtered = filterByDistrict(
-        monthFiltered,
-        district.value
-    );
-
-    // เรียงตามวันเวลาที่กำหนด
-    filtered.sort((a, b) => {
-        return new Date(a.scheduledAt) -
-            new Date(b.scheduledAt);
-    });
-
-    const counts = {};
-
-    filtered.forEach((item) => {
-        const districtName = normalizeDistrict(
-            item.district
-        );
-
-        // ไม่นับรายการที่ยกเลิก
-        if (item.status !== "cancelled") {
-            counts[districtName] =
-                (counts[districtName] || 0) + 1;
-        }
-
-        const tr = document.createElement("tr");
-
-        addCell(
-            tr,
-            districtName ? `เขต${districtName}` : "-"
-        );
-
-        addCell(tr, item.location);
-        addCell(tr, thaiDate(item.scheduledAt));
-
-        const statusCell = addCell(
-            tr,
-            statusNames[item.status] ||
-            item.status ||
-            "-"
-        );
-
-        if (item.status) {
-            statusCell.classList.add(
-                `status-${item.status}`
-            );
-        }
-
-        addCell(tr, item.notes);
-
-        rows.appendChild(tr);
-    });
-
-    /* ===== แสดงสถิติ ===== */
-
-    Object.entries(counts)
-
-    /* ==========================================
-       แสดงสถิติครบ 50 เขต กรุงเทพมหานคร
-    ========================================== */
-
-    const selectedDistrict = normalizeDistrict(district.value);
-
-    const districtsToShow = selectedDistrict
-        ? [selectedDistrict]
-        : BANGKOK_DISTRICTS;
-
-    districtsToShow.forEach((name) => {
-        const count = counts[name] || 0;
-
-        const card = document.createElement("div");
-        card.className = "stat";
-
-        if (count > 0) {
-            card.textContent =
-                `เขต${name}: ${count} ครั้ง/เดือน`;
-        } else {
-            card.textContent =
-                `เขต${name}: ยังไม่มีข้อมูลกำหนดการ`;
-        }
-
-        stats.appendChild(card);
-    });
-
-
-    /* ===== ไม่มีข้อมูล ===== */
+    const filtered = filterRecords();
 
     if (filtered.length === 0) {
         const tr = document.createElement("tr");
         const td = document.createElement("td");
 
         td.colSpan = 5;
-        td.className = "empty-cell";
-
         td.textContent =
-            "ยังไม่พบกำหนดการพ่นสารเคมีที่บันทึกไว้ในเดือนและเขตที่เลือก";
+            "ไม่พบกำหนดการพ่นสารเคมีในเดือนหรือเขตที่เลือก";
 
         tr.appendChild(td);
         rows.appendChild(tr);
+    } else {
+        filtered.sort(
+            (a, b) =>
+                new Date(a.scheduledAt) -
+                new Date(b.scheduledAt)
+        );
 
-        const emptyStat = document.createElement("div");
+        filtered.forEach((item) => {
+            const tr = document.createElement("tr");
 
-        emptyStat.className = "stat";
+            addCell(
+                tr,
+                `เขต${normalizeDistrict(item.district)}`
+            );
 
-        emptyStat.textContent =
-            "ยังไม่มีข้อมูลจำนวนครั้งในเดือนนี้";
+            addCell(tr, item.location || "-");
 
-        stats.appendChild(emptyStat);
+            addCell(tr, thaiDate(item.scheduledAt));
+
+            addCell(
+                tr,
+                statusNames[item.status] ||
+                item.status ||
+                "-"
+            );
+
+            addCell(tr, item.notes || "-");
+
+            rows.appendChild(tr);
+        });
     }
 
-    showMessage(
-        filtered.length > 0
-            ? `พบกำหนดการ ${filtered.length} รายการ`
-            : "ยังไม่พบกำหนดการในเดือนและเขตที่เลือก"
-    );
+    displayStats(filtered);
 }
 
 /* ==========================================
-   15. โหลดข้อมูลจาก Backend API
+   สรุปจำนวนครั้งต่อเขต
+========================================== */
+
+function displayStats(filtered) {
+    if (!stats) return;
+
+    stats.replaceChildren();
+
+    const selectedDistrict = normalizeDistrict(
+        district?.value || ""
+    );
+
+    const districts = selectedDistrict
+        ? [selectedDistrict]
+        : [...new Set(BANGKOK_DISTRICTS)]
+            .sort((a, b) => a.localeCompare(b, "th"));
+
+    districts.forEach((name) => {
+        const count = filtered.filter(
+            (item) =>
+                normalizeDistrict(item.district) === name &&
+                item.status !== "cancelled"
+        ).length;
+
+        const card = document.createElement("div");
+
+        const title = document.createElement("strong");
+        title.textContent = `เขต${name}`;
+
+        const number = document.createElement("p");
+        number.textContent = `${count} ครั้ง`;
+
+        card.append(title, number);
+
+        stats.appendChild(card);
+    });
+}
+
+/* ==========================================
+   โหลดข้อมูลจาก Backend
 ========================================== */
 
 async function loadReports() {
@@ -415,18 +335,15 @@ async function loadReports() {
 
     isLoading = true;
 
-    showMessage("กำลังโหลดข้อมูลล่าสุด...");
+    if (reload) {
+        reload.disabled = true;
+        reload.textContent = "กำลังโหลด...";
+    }
+
+    showMessage("");
 
     try {
-        const params = new URLSearchParams();
-
-        if (month.value) {
-            params.set("month", month.value);
-        }
-
-        const url = `${API_URL}?${params.toString()}`;
-
-        const response = await fetch(url, {
+        const response = await fetch(API_URL, {
             method: "GET",
             cache: "no-store",
             headers: {
@@ -436,133 +353,88 @@ async function loadReports() {
 
         if (!response.ok) {
             throw new Error(
-                `Backend ตอบกลับ HTTP ${response.status}`
+                `ไม่สามารถโหลดข้อมูลได้ (HTTP ${response.status})`
             );
         }
 
-        const result = await response.json();
+        const contentType =
+            response.headers.get("content-type") || "";
 
-        if (!result.success) {
+        if (!contentType.toLowerCase().includes("application/json")) {
             throw new Error(
-                result.message || "โหลดข้อมูลไม่สำเร็จ"
+                "Backend ไม่ได้ส่งข้อมูล JSON กรุณาตรวจสอบ API"
             );
         }
 
-        const apiRecords = Array.isArray(result.data)
-            ? result.data
-            : [];
+        const json = await response.json();
 
-        // รับเฉพาะรายการที่อยู่ใน 50 เขต
-        records = apiRecords.filter((item) => {
-            const name = normalizeDistrict(item.district);
+        if (!json.success || !Array.isArray(json.data)) {
+            throw new Error(
+                json.message || "รูปแบบข้อมูลจาก API ไม่ถูกต้อง"
+            );
+        }
 
-            return BANGKOK_DISTRICTS.includes(name);
-        });
+        records = json.data;
 
-        // ไม่ลบ Dropdown 50 เขต
         displayReports();
 
     } catch (error) {
         console.error("Spraying API Error:", error);
+        console.error("API URL:", API_URL);
 
         records = [];
 
-        rows.replaceChildren();
-        stats.replaceChildren();
+        if (rows) {
+            rows.replaceChildren();
 
-        const tr = document.createElement("tr");
-        const td = document.createElement("td");
+            const tr = document.createElement("tr");
+            const td = document.createElement("td");
 
-        td.colSpan = 5;
-        td.className = "empty-cell";
+            td.colSpan = 5;
+            td.textContent = "ไม่สามารถโหลดข้อมูลจากระบบได้";
 
-        td.textContent =
-            "ไม่สามารถเชื่อมต่อข้อมูลกำหนดการได้";
+            tr.appendChild(td);
+            rows.appendChild(tr);
+        }
 
-        tr.appendChild(td);
-        rows.appendChild(tr);
+        if (stats) {
+            stats.textContent = "ไม่สามารถโหลดข้อมูลสรุปได้";
+        }
 
         showMessage(
-            `ไม่สามารถโหลดข้อมูลได้: ${error.message}`,
-            true
+            `เกิดข้อผิดพลาด: ${error.message}`
         );
 
     } finally {
         isLoading = false;
+
+        if (reload) {
+            reload.disabled = false;
+            reload.textContent = "🔄 โหลดข้อมูลล่าสุด";
+        }
     }
 }
 
 /* ==========================================
-   16. EVENTS
+   เริ่มต้นระบบ
 ========================================== */
 
-function initializeSprayingPage() {
-    if (
-        !month ||
-        !district ||
-        !rows ||
-        !stats ||
-        !message
-    ) {
-        console.error(
-            "ไม่พบองค์ประกอบ HTML ที่จำเป็น"
-        );
-        return;
+function initialize() {
+    populateDistricts();
+
+    if (month && !month.value) {
+        month.value = currentBangkokMonth();
     }
 
-    // กำหนดเดือนปัจจุบัน
-    month.value = getCurrentMonth();
+    month?.addEventListener("change", displayReports);
+    district?.addEventListener("change", displayReports);
+    reload?.addEventListener("click", loadReports);
 
-    // แสดง 50 เขต
-    populateDistrictSelect("district", true);
-
-    // เปลี่ยนเดือน
-    month.addEventListener("change", () => {
-        loadReports();
-    });
-
-    // เปลี่ยนเขต
-    district.addEventListener("change", () => {
-        displayReports();
-    });
-
-    // ปุ่มโหลดข้อมูลล่าสุด
-    if (reload) {
-        reload.addEventListener("click", () => {
-            loadReports();
-        });
-    }
-
-    // โหลดข้อมูลทุก 60 วินาที
-    setInterval(() => {
-        if (!document.hidden) {
-            loadReports();
-        }
-    }, REFRESH_INTERVAL);
-
-    // กลับมาเปิดแท็บ
-    document.addEventListener(
-        "visibilitychange",
-        () => {
-            if (!document.hidden) {
-                loadReports();
-            }
-        }
-    );
-
-    // โหลดข้อมูลครั้งแรก
     loadReports();
 }
 
-/* ==========================================
-   17. START APPLICATION
-========================================== */
-
 if (document.readyState === "loading") {
-    document.addEventListener(
-        "DOMContentLoaded",
-        initializeSprayingPage
-    );
+    document.addEventListener("DOMContentLoaded", initialize);
 } else {
-    initializeSprayingPage();
+    initialize();
 }
