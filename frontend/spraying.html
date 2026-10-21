@@ -14,6 +14,7 @@
 
 <body>
 
+    <!-- HEADER -->
     <header>
         <h1>🦟 ตารางพ่นสารเคมีกำจัดยุง</h1>
         <p>ระบบเฝ้าระวังและป้องกันโรคไข้เลือดออก</p>
@@ -25,8 +26,10 @@
 
     <main>
 
+        <!-- FILTER -->
         <section>
             <h2>📅 ตรวจสอบกำหนดการพ่นสารเคมี</h2>
+
             <p>
                 ตรวจสอบข้อมูลการพ่นสารเคมีกำจัดยุง
                 ในพื้นที่ 50 เขต กรุงเทพมหานคร
@@ -53,17 +56,22 @@
             </div>
         </section>
 
+        <!-- SUMMARY -->
         <section>
             <h2>📊 สรุปจำนวนครั้งที่กำหนดพ่นสารเคมี</h2>
-            <div id="stats">
+
+            <div id="stats" aria-live="polite">
                 กำลังโหลดข้อมูล...
             </div>
         </section>
 
+        <!-- SCHEDULE TABLE -->
         <section>
             <h2>📋 รายการกำหนดการพ่นสารเคมี</h2>
 
-            <p id="message" role="status" aria-live="polite"></p>
+            <p id="message"
+               role="status"
+               aria-live="polite"></p>
 
             <div class="scroll">
                 <table>
@@ -96,6 +104,7 @@
 
     </main>
 
+    <!-- FOOTER -->
     <footer>
         <p>
             Dengue Portal |
@@ -103,10 +112,22 @@
         </p>
     </footer>
 
+    <!-- ตั้งค่า API Backend -->
+    <script>
+        // หาก Backend อยู่คนละโดเมนกับ Frontend
+        // ให้กำหนด URL จริงของ Backend ที่นี่
+        //
+        // ตัวอย่าง:
+        // window.DENGUE_API_BASE_URL =
+        //     "https://your-backend.example.com";
+
+        window.DENGUE_API_BASE_URL = "";
+    </script>
+
     <!-- รายชื่อ 50 เขต -->
     <script src="./js/bangkok-districts.js"></script>
 
-    <!-- ระบบแสดงตารางพ่นสารเคมี -->
+    <!-- ระบบตารางพ่นสารเคมี -->
     <script src="./js/spraying.js"></script>
 
 </body>
