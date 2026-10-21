@@ -4,8 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>ตารางพ่นสารเคมีกำจัดยุง | Dengue Portal</title>
 
@@ -112,23 +111,13 @@
         </p>
     </footer>
 
-    <!-- ตั้งค่า API Backend -->
+    <!-- กำหนด URL ของ Backend ออนไลน์ -->
     <script>
-        // หาก Backend อยู่คนละโดเมนกับ Frontend
-        // ให้กำหนด URL จริงของ Backend ที่นี่
-        //
-        // ตัวอย่าง:
-        // window.DENGUE_API_BASE_URL =
-        //     "https://your-backend.example.com";
-
-        window.DENGUE_API_BASE_URL = 
-        "https://dengue-portal-api.vercel.app";
+        window.DENGUE_API_BASE_URL =
+            "https://dengue-portal-api.vercel.app";
     </script>
 
-    <!-- รายชื่อ 50 เขต -->
-    <script src="./js/bangkok-districts.js"></script>
-
-    <!-- ระบบตารางพ่นสารเคมี -->
+    <!-- โหลดระบบตารางพ่นสารเคมี -->
     <script src="./js/spraying.js"></script>
 
 </body>
