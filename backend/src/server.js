@@ -8,15 +8,39 @@ const { PrismaLibSql } = require('@prisma/adapter-libsql');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// ==========================================
 // เชื่อมต่อฐานข้อมูล Turso
+// ==========================================
+
+const databaseUrl = process.env.DATABASE_URL?.trim();
+const tursoAuthToken = process.env.TURSO_AUTH_TOKEN?.trim();
+
+if (!databaseUrl) {
+  throw new Error(
+    "DATABASE_URL is missing. Please configure it in Render Environment."
+  );
+}
+
+if (!databaseUrl.startsWith("libsql://")) {
+  throw new Error(
+    "DATABASE_URL must be a valid Turso libsql:// URL."
+  );
+}
+
+if (!tursoAuthToken) {
+  throw new Error(
+    "TURSO_AUTH_TOKEN is missing. Please configure it in Render Environment."
+  );
+}
+
 const adapter = new PrismaLibSql({
-  url: process.env.DATABASE_URL,
-  authToken: process.env.TURSO_AUTH_TOKEN
+  url: databaseUrl,
+  authToken: tursoAuthToken
 });
 
-const prisma = new PrismaClient({
-  adapter
-});
+const prisma = new PrismaClient({ adapter });
+
+console.log("Turso environment configuration detected.");
 
 app.use(cors());
 app.use(express.json());
